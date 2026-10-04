@@ -35,6 +35,16 @@ header.top .wrap{padding-top:44px;padding-bottom:36px}
 h1{font-family:var(--head);font-weight:700;font-size:clamp(34px,6vw,56px);line-height:1.02;margin:0 0 12px;letter-spacing:-.02em;max-width:14ch;background:var(--paper);display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 6px}
 .lede{max-width:56ch;color:var(--muted);margin:18px 0 0;background:var(--paper);display:inline-block;padding:2px 6px}
 
+.summary{margin:28px 0 0;border:1.5px solid var(--line);border-radius:12px;padding:18px 20px}
+.summary h2{font-family:var(--head);font-weight:700;font-size:20px;margin:0 0 12px}
+.summary .total{font-family:var(--head);font-size:34px;font-weight:700;color:var(--accent)}
+.split{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:14px 0 12px}
+.split i{display:block;height:100%}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px 18px;font-size:15px}
+.legend div{display:flex;align-items:center;gap:8px}
+.legend b{margin-left:auto;white-space:nowrap}
+.sw{width:12px;height:12px;border-radius:3px;flex:none}
+.domain h2 .pct{font-family:var(--body);font-size:14px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px}
 .domain{margin:36px 0 8px}
 .domain h2{font-family:var(--head);font-weight:500;font-size:22px;margin:0 0 14px;display:flex;align-items:baseline;gap:10px}
 .domain h2 small{font-family:var(--body);font-size:14px;color:var(--muted);font-weight:400}
@@ -145,11 +155,20 @@ const QS = Object.entries(DATA).map(([k,v])=>{const m=k.match(/T(\d+)-M(\d)-Q(\d
 const $ = id => document.getElementById(id);
 let list=[], idx=0;
 const answered={};
+const COLORS=["#1F4FD1","#7A9BEE","#17784A","#D0A21A"];
 function renderHome(){
   const m=$("domains"); m.innerHTML="";
-  DOMAINS.forEach(d=>{
+  const total=QS.length;
+  const counts=DOMAINS.map(d=>QS.filter(q=>d.cats.includes(q.c)).length);
+  const pct=n=>(n/total*100).toFixed(1)+"%";
+  const sum=document.createElement("section"); sum.className="summary";
+  sum.innerHTML=`<h2>Question breakdown</h2><div><span class="total">${total}</span> questions in total</div>
+    <div class="split">${counts.map((n,i)=>`<i style="width:${n/total*100}%;background:${COLORS[i]}" title="${DOMAINS[i].name}: ${pct(n)}"></i>`).join("")}</div>
+    <div class="legend">${DOMAINS.map((d,i)=>`<div><span class="sw" style="background:${COLORS[i]}"></span>${d.name}<b>${counts[i]} · ${pct(counts[i])}</b></div>`).join("")}</div>`;
+  m.appendChild(sum);
+  DOMAINS.forEach((d,di)=>{
     const sec=document.createElement("section"); sec.className="domain";
-    sec.innerHTML=`<h2>${d.name} <small>${d.note}</small></h2>`;
+    sec.innerHTML=`<h2>${d.name} <span class="pct">${counts[di]} questions · ${pct(counts[di])}</span> <small>${d.note}</small></h2>`;
     const g=document.createElement("div"); g.className="grid";
     d.cats.forEach(c=>{
       const qs=QS.filter(q=>q.c===c), done=qs.filter(q=>answered[q.k]?.ok).length;
