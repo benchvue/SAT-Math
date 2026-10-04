@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SAT Math Category Viewer</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root { --border:#d9dde5; --text:#172033; --muted:#687386; --accent:#2563eb; --bg:#fff; --soft:#f6f8fb; }
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:18px 22px;border-bottom:1px solid var(--border);position:sticky;top:0;background:white;z-index:10}
+h1{font-size:21px;margin:0 0 5px}.sub{font-size:13px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:330px 1fr;min-height:calc(100vh - 75px)}
+aside{border-right:1px solid var(--border);padding:16px;overflow:auto}
+.categories{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+button{border:1px solid var(--border);background:white;color:var(--text);border-radius:7px;padding:9px 10px;cursor:pointer;text-align:left}
+button:hover{background:var(--soft)} button.active{border-color:var(--accent);background:#eef4ff;color:#174ea6;font-weight:700}
+main{padding:20px;min-width:0}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.nav{padding:9px 16px;text-align:center}.nav:disabled{opacity:.35;cursor:not-allowed}
+.counter{font-weight:700}.meta{color:var(--muted);font-size:13px}
+.viewer{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--soft);height:calc(100vh - 170px);min-height:550px}
+iframe{width:100%;height:100%;border:0;background:white}
+.empty{display:flex;height:100%;align-items:center;justify-content:center;color:var(--muted);padding:30px;text-align:center}
+.note{margin-top:12px;font-size:12px;color:var(--muted)}
+@media(max-width:850px){.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--border)}.categories{grid-template-columns:repeat(2,1fr)}.viewer{height:70vh}}
+</style>
+</head>
+<body>
+<header>
+  <h1>SAT Math Category Viewer</h1>
+  <div class="sub">Choose one of 24 categories. Each PDF page is treated as one question-page. Use Previous / Next to move through matching pages.</div>
+</header>
+<div class="layout">
+<aside>
+  <div class="categories" id="categories"></div>
+  <div class="note">
+    Put this HTML file in the same folder as the eight <b>-math.pdf</b> files.
+    Edit only the <b>QUESTIONS</b> table in the script to assign Test/Page items to categories.
+  </div>
+</aside>
+<main>
+  <div class="toolbar">
+    <button class="nav" id="prev">← Previous</button>
+    <button class="nav" id="next">Next →</button>
+    <span class="counter" id="counter">Select a category</span>
+    <span class="meta" id="meta"></span>
+  </div>
+  <div style="font-size:20px;font-weight:700;margin:4px 0 10px" id="questionTitle"></div><div class="viewer" id="viewer"><div class="empty">Select a category on the left.</div></div>
+</main>
+</div>
+
+<script>
+const CATEGORIES = [
+ ["LIN-EQ","Linear Equations"], ["LIN-GR","Linear Graphs"],
+ ["SYSTEM","Systems of Equations"], ["INEQ","Linear Inequalities"],
+ ["QUAD-EQ","Quadratic Equations"], ["QUAD-GR","Quadratic Graphs"],
+ ["POLY","Polynomial Expressions"], ["RATIONAL","Rational Expressions"],
+ ["RAD-EXP","Radicals & Exponents"], ["EXP","Exponential Functions"],
+ ["FUNC","Functions"], ["RATIO","Ratios & Proportions"],
+ ["PERCENT","Percent"], ["RATE","Rates & Units"],
+ ["STAT","Statistics"], ["DATA","Data & Tables"],
+ ["PROB","Probability"], ["GEO","Geometry"],
+ ["CIRCLE","Circles"], ["COORD","Coordinate Geometry"],
+ ["VOL","Volume & 3D Geometry"], ["TRIG","Trigonometry"],
+ ["SIM","Similar / Congruent Triangles"], ["MODEL","Word Problems / Modeling"]
+];
+
+/*
+  Add classifications here.
+
+  test = SAT practice test number
+  page = page number INSIDE your extracted -math.pdf, starting at 1
+  cat  = one of the category codes above
+
+  Examples below are based on visible questions from the uploaded PDFs.
+  Continue adding rows in exactly the same format.
+*/
+const QUESTIONS = [
+ {test:4,page:1,cat:"DATA",q:"1"},       // bar graph
+ {test:4,page:1,cat:"PERCENT",q:"2"},    // NOTE: if several questions share a PDF page, split PDFs to one-question-per-page first
+
+ {test:5,page:1,cat:"SYSTEM",q:"1"},
+ {test:5,page:1,cat:"LIN-GR",q:"3"},
+ {test:5,page:2,cat:"SYSTEM",q:"4, 6"},
+ {test:5,page:2,cat:"STAT",q:"7"},
+
+ {test:6,page:1,cat:"LIN-EQ",q:"1"},
+ {test:6,page:2,cat:"DATA",q:"2"},
+ {test:6,page:3,cat:"INEQ",q:"4"},
+ {test:6,page:3,cat:"QUAD-GR",q:"5"},
+ {test:6,page:3,cat:"RATE",q:"6"},
+ {test:6,page:4,cat:"LIN-EQ",q:"7"},
+ {test:6,page:4,cat:"LIN-GR",q:"8"},
+ {test:6,page:4,cat:"EXP",q:"9"},
+
+ {test:7,page:1,cat:"DATA",q:"1"},
+ {test:7,page:1,cat:"GEO",q:"2"},
+ {test:7,page:1,cat:"LIN-EQ",q:"3, 4"},
+ {test:7,page:2,cat:"DATA",q:"5"},
+ {test:7,page:2,cat:"LIN-GR",q:"6, 8"},
+ {test:7,page:2,cat:"POLY",q:"7"},
+ {test:7,page:3,cat:"SIM",q:"9"},
+ {test:7,page:3,cat:"FUNC",q:"10"},
+ {test:7,page:3,cat:"SYSTEM",q:"11"},
+
+ {test:8,page:1,cat:"RATE",q:"1"},
+ {test:8,page:1,cat:"PROB",q:"2"},
+ {test:8,page:1,cat:"LIN-GR",q:"3"},
+ {test:8,page:1,cat:"POLY",q:"4"},
+ {test:8,page:2,cat:"STAT",q:"5"},
+ {test:8,page:2,cat:"PERCENT",q:"7"},
+ {test:8,page:2,cat:"SIM",q:"9"},
+ {test:8,page:2,cat:"LIN-GR",q:"8, 10"},
+ {test:8,page:3,cat:"LIN-GR",q:"11"},
+ {test:8,page:3,cat:"EXP",q:"12"},
+ {test:8,page:3,cat:"SYSTEM",q:"13"},
+
+ {test:9,page:1,cat:"GEO",q:"1"},
+ {test:9,page:1,cat:"LIN-EQ",q:"2"},
+ {test:9,page:1,cat:"RATE",q:"3"},
+ {test:9,page:1,cat:"FUNC",q:"4"},
+ {test:9,page:1,cat:"POLY",q:"5"},
+ {test:9,page:1,cat:"STAT",q:"6"},
+ {test:9,page:2,cat:"LIN-EQ",q:"7"},
+ {test:9,page:2,cat:"MODEL",q:"8, 9, 10"},
+ {test:9,page:3,cat:"EXP",q:"11"},
+ {test:9,page:3,cat:"CIRCLE",q:"12"},
+ {test:9,page:3,cat:"SYSTEM",q:"13"},
+ {test:9,page:3,cat:"DATA",q:"14"},
+
+ {test:10,page:1,cat:"DATA",q:"1"},
+ {test:10,page:1,cat:"SYSTEM",q:"2"},
+ {test:10,page:2,cat:"INEQ",q:"3"},
+ {test:10,page:3,cat:"QUAD-GR",q:"4"},
+
+ {test:11,page:1,cat:"GEO",q:"1"},
+ {test:11,page:1,cat:"LIN-EQ",q:"2"},
+ {test:11,page:1,cat:"LIN-GR",q:"3"},
+ {test:11,page:1,cat:"QUAD-EQ",q:"4"},
+ {test:11,page:2,cat:"PROB",q:"5"},
+ {test:11,page:2,cat:"PERCENT",q:"6"},
+ {test:11,page:2,cat:"SYSTEM",q:"7"},
+ {test:11,page:2,cat:"MODEL",q:"8"},
+ {test:11,page:3,cat:"FUNC",q:"9"},
+ {test:11,page:3,cat:"STAT",q:"10"},
+ {test:11,page:3,cat:"POLY",q:"11"},
+ {test:11,page:3,cat:"SYSTEM",q:"12"},
+ {test:11,page:4,cat:"EXP",q:"14"},
+ {test:11,page:4,cat:"DATA",q:"15"},
+ {test:11,page:4,cat:"QUAD-EQ",q:"16"}
+];
+
+let selectedCat = null;
+let filtered = [];
+let pos = 0;
+
+const cats = document.getElementById("categories");
+const viewer = document.getElementById("viewer");
+const counter = document.getElementById("counter");
+const meta = document.getElementById("meta");
+const questionTitle = document.getElementById("questionTitle");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+
+for (const [code,name] of CATEGORIES) {
+  const b=document.createElement("button");
+  b.innerHTML=`<b>${code}</b><br><span style="font-size:12px">${name}</span>`;
+  b.dataset.cat=code;
+  b.onclick=()=>selectCategory(code,b);
+  cats.appendChild(b);
+}
+
+function selectCategory(code,button){
+  selectedCat=code;
+  document.querySelectorAll("#categories button").forEach(x=>x.classList.remove("active"));
+  button.classList.add("active");
+
+  // Remove duplicate Test/Page entries in the same category.
+  const seen=new Set();
+  filtered=QUESTIONS.filter(q=>q.cat===code).filter(q=>{
+    const k=q.test+"-"+q.page+"-"+q.cat;
+    if(seen.has(k)) return false;
+    seen.add(k); return true;
+  });
+  pos=0;
+  render();
+}
+
+function render(){
+  if(!filtered.length){
+    counter.textContent="0 questions";
+    questionTitle.textContent="";
+    meta.textContent=selectedCat ? `No ${selectedCat} pages assigned yet.` : "";
+    viewer.innerHTML='<div class="empty">No pages are assigned to this category yet.<br>Edit the QUESTIONS table in the HTML file.</div>';
+    prev.disabled=next.disabled=true;
+    return;
+  }
+  const q=filtered[pos];
+  const file=`sat-practice-test-${q.test}-digital-math.pdf`;
+  questionTitle.textContent=`Question ${q.q || "?"} — SAT Practice Test ${q.test} — ${selectedCat}`;
+  // #page=N asks the browser PDF viewer to open that PDF page.
+  viewer.innerHTML=`<iframe src="${file}#page=${q.page}&zoom=page-fit"></iframe>`;
+  counter.textContent=`${pos+1} / ${filtered.length}`;
+  meta.innerHTML=`SAT Practice Test ${q.test} &nbsp;•&nbsp; <b>Question ${q.q || "?"}</b> &nbsp;•&nbsp; extracted PDF page ${q.page} &nbsp;•&nbsp; ${selectedCat}`;
+  prev.disabled=pos===0;
+  next.disabled=pos===filtered.length-1;
+}
+
+prev.onclick=()=>{if(pos>0){pos--;render();}};
+next.onclick=()=>{if(pos<filtered.length-1){pos++;render();}};
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowLeft") prev.click();
+  if(e.key==="ArrowRight") next.click();
+});
+prev.disabled=next.disabled=true;
+</script>
+</body>
+</html>
