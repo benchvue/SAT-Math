@@ -6,7 +6,7 @@
 <title>SAT Math Practice by Topic</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   box-sizing:border-box;
@@ -105,6 +105,34 @@ sup,sub{font-size:.7em;line-height:0}
 .reveal{margin-top:14px;background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0;font-size:15px}
 @media (max-width:560px){.card{padding:18px 16px}.qtext{font-size:18px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+[hidden]{display:none!important}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.tabs button{border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:8px 18px;cursor:pointer;font-weight:700;font-size:16px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.gq{padding-top:30px;padding-bottom:8px}
+.gq-intro{max-width:64ch;color:var(--muted);margin:0 0 20px}
+.gq-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;max-width:640px}
+.gq-card{border:1.5px solid var(--line);border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column}
+.gq-card h3{font-family:var(--head);font-weight:700;font-size:21px;margin:0 0 6px;line-height:1.2}
+.gq-card .why{font-size:14px;color:var(--muted);margin:-2px 0 8px}
+.gq-q{margin:0 0 10px}
+.gq-plot{display:flex;justify-content:center}
+.gq-svg{width:100%;max-width:420px;height:auto;display:block;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.gq-svg.pick{cursor:crosshair}
+.gq-svg text{font-family:"Atkinson Hyperlegible",system-ui,sans-serif}
+.gq-choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.gq-choices .opt{min-width:72px;justify-content:center;font-family:var(--body);font-weight:700;font-size:17px;padding:8px 12px}
+.gq-toggle{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted);margin-top:10px;cursor:pointer}
+.gq-actions{display:flex;gap:8px;margin-top:12px}
+.gq-status{min-height:1.5em;font-size:15px;color:var(--muted);margin:10px 0 0}
+.gq-status.err{color:var(--bad)}
+.gq-ans{margin-top:10px;background:var(--accent-soft);border-radius:9px;padding:12px 14px;font-size:16px;line-height:1.55}
+.gq-ans p{margin:6px 0 0}
+.gq-eq{font-family:"STIX Two Text","Times New Roman",serif;font-size:23px;color:#138A3E;font-weight:600}
+.gq-eq i{font-style:italic}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.78em;line-height:1.05;margin:0 2px}
+.fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 2px}
+.c-red{color:#D02B20;font-weight:700}.c-green{color:#138A3E;font-weight:700}.c-blue{color:#1F4FD1;font-weight:700}
 </style>
 </head>
 <body>
@@ -112,8 +140,53 @@ sup,sub{font-size:.7em;line-height:0}
   <header class="top"><div class="wrap">
     <h1>SAT Math practice, one topic at a time</h1><br>
     <p class="lede">Pick one of the 24 topics. Every question appears exactly as printed in Bluebook practice tests 4 through 11, one per page, with instant checking and a short explanation.</p>
+    <nav class="tabs" aria-label="Sections"><button data-tab="topics" aria-selected="true">Practice by topic</button><button data-tab="gq" aria-selected="false">Graph quizzes</button></nav>
   </div></header>
   <main class="wrap" id="domains"></main>
+<section class="wrap gq" id="gq" hidden>
+  <p class="gq-intro">Interactive drills for the graph skills the SAT tests over and over. Press <b>New</b> (or <b>Random</b>) to make a fresh problem, work it out, then press <b>Answer</b> to check.</p>
+  <div class="gq-grid">
+
+    <article class="gq-card" id="gq-angle">
+      <h3>Angles on a circle</h3>
+      <p class="gq-q">The <span class="c-red">red</span> ray runs from (0, 0) to (1, 0). What angle θ does the <span class="c-green">green</span> ray make with it?</p>
+      <div class="gq-plot"></div>
+      <div class="gq-actions"><button class="btn ghost gq-new">Random</button><button class="btn gq-answer">Answer</button></div>
+      <p class="gq-status"></p>
+      <div class="gq-ans" hidden></div>
+    </article>
+
+    <article class="gq-card" id="gq-line">
+      <h3>Linear function graph</h3>
+      <p class="gq-q">The <span class="c-green">green</span> line passes through <span class="c-red">A</span> and <span class="c-blue">B</span>. What is its equation?</p>
+      <div class="gq-plot"></div>
+      <div class="gq-actions"><button class="btn ghost gq-new">New</button><button class="btn gq-answer">Answer</button></div>
+      <p class="gq-status"></p>
+      <div class="gq-ans" hidden></div>
+    </article>
+
+    <article class="gq-card" id="gq-quad">
+      <h3>Quadratic function graph</h3>
+      <p class="gq-q">The <span class="c-green">green</span> parabola has vertex <span class="c-red">A</span> and passes through <span class="c-blue">B</span>. What is its equation?</p>
+      <div class="gq-plot"></div>
+      <div class="gq-actions"><button class="btn ghost gq-new">New</button><button class="btn gq-answer">Answer</button></div>
+      <p class="gq-status"></p>
+      <div class="gq-ans" hidden></div>
+    </article>
+
+    <article class="gq-card" id="gq-exp">
+      <h3>Exponential function graph</h3>
+      <p class="why">Exponential functions are the most-tested topic not covered by the first three drills (31 of the 432 questions).</p>
+      <p class="gq-q">The <span class="c-green">green</span> curve <i>y</i> = <i>a</i>(<i>b</i>)<sup><i>x</i></sup> has <i>y</i>-intercept <span class="c-red">A</span> and passes through <span class="c-blue">B</span>. What are <i>a</i> and <i>b</i>?</p>
+      <div class="gq-plot"></div>
+      <div class="gq-actions"><button class="btn ghost gq-new">New</button><button class="btn gq-answer">Answer</button></div>
+      <p class="gq-status"></p>
+      <div class="gq-ans" hidden></div>
+    </article>
+
+  </div>
+</section>
+
   <footer class="wrap">432 questions from 8 practice tests. Tip: use the ← and → keys to move between questions.</footer>
 </div>
 <div id="quiz" class="wrap">
@@ -237,6 +310,289 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowLeft"&&idx>0)$("prevBtn").click();
 });
 renderHome();
+/* ================= Tabs ================= */
+(function(){
+  const tabs=document.querySelectorAll(".tabs button");
+  function show(name){
+    tabs.forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===name?"true":"false"));
+    document.getElementById("domains").hidden = name!=="topics";
+    document.getElementById("gq").hidden = name!=="gq";
+    try{ history.replaceState(null,"",name==="gq"?"#graph-quizzes":location.pathname+location.search); }catch(e){}
+  }
+  tabs.forEach(b=>b.onclick=()=>show(b.dataset.tab));
+  if(location.hash==="#graph-quizzes") show("gq");
+})();
+
+/* ================= Graph quizzes ================= */
+(function(){
+const NS="http://www.w3.org/2000/svg";
+const GREEN="#138A3E", RED="#D02B20", BLUE="#1F4FD1", BLACK="#000";
+let UID=0;
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function txt(parent,x,y,s,attrs={}){const t=el("text",Object.assign({x,y,fill:BLACK,"font-size":13},attrs),parent);t.textContent=s;return t;}
+const minus=s=>String(s).replace(/-/g,"−");
+
+/* ---- exact fractions ---- */
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;}
+class F{constructor(n,d=1){if(d<0){n=-n;d=-d;}const g=gcd(n,d);this.n=n/g;this.d=d/g;}
+  add(o){return new F(this.n*o.d+o.n*this.d,this.d*o.d);}
+  mul(o){return new F(this.n*o.n,this.d*o.d);}
+  isZero(){return this.n===0;} val(){return this.n/this.d;}}
+function fh(f){ // fraction HTML (with sign)
+  if(f.d===1) return minus(f.n);
+  return (f.n<0?"−":"")+`<span class="fr"><span>${Math.abs(f.n)}</span><span>${f.d}</span></span>`;
+}
+function term(f,v,first){
+  if(f.isZero()) return "";
+  const neg=f.n<0, a=new F(Math.abs(f.n),f.d);
+  const sign=first?(neg?"−":""):(neg?" − ":" + ");
+  const c=(v&&a.n===1&&a.d===1)?"":fh(a);
+  return sign+c+(v||"");
+}
+function poly(terms){let s="",first=true;for(const [f,v] of terms){const t=term(f,v,first);if(t){s+=t;first=false;}}return s||"0";}
+const X_="<i>x</i>", Y_="<i>y</i>";
+
+/* ---- coordinate plane ---- */
+function plane(host,xr,yr,labelEvery){
+  const W=420,H=420,P=30, [x0,x1]=xr, [y0,y1]=yr;
+  const sx=(W-2*P)/(x1-x0), sy=(H-2*P)/(y1-y0);
+  const X=x=>P+(x-x0)*sx, Y=y=>H-P-(y-y0)*sy;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,class:"gq-svg",role:"img","aria-label":"coordinate plane"},host);
+  const id="gq"+(UID++), defs=el("defs",{},svg);
+  el("rect",{x:P,y:P,width:W-2*P,height:H-2*P},el("clipPath",{id:id+"c"},defs));
+  const mk=el("marker",{id:id+"a",viewBox:"0 0 10 10",refX:8,refY:5,markerWidth:7,markerHeight:7,orient:"auto-start-reverse"},defs);
+  el("path",{d:"M0,0 L10,5 L0,10 z",fill:BLACK},mk);
+  el("rect",{x:0,y:0,width:W,height:H,fill:"#fff"},svg);
+  for(let x=x0;x<=x1;x++) el("line",{x1:X(x),y1:Y(y0),x2:X(x),y2:Y(y1),stroke:BLACK,"stroke-opacity":.22,"stroke-width":1},svg);
+  for(let y=y0;y<=y1;y++) el("line",{x1:X(x0),y1:Y(y),x2:X(x1),y2:Y(y),stroke:BLACK,"stroke-opacity":.22,"stroke-width":1},svg);
+  el("line",{x1:X(x0)-6,y1:Y(0),x2:X(x1)+12,y2:Y(0),stroke:BLACK,"stroke-width":2,"marker-start":`url(#${id}a)`,"marker-end":`url(#${id}a)`},svg);
+  el("line",{x1:X(0),y1:Y(y0)+6,x2:X(0),y2:Y(y1)-12,stroke:BLACK,"stroke-width":2,"marker-start":`url(#${id}a)`,"marker-end":`url(#${id}a)`},svg);
+  txt(svg,X(x1)+4,Y(0)-8,"x",{"font-style":"italic","font-size":16});
+  txt(svg,X(0)+8,Y(y1)-4,"y",{"font-style":"italic","font-size":16});
+  for(let x=x0+1;x<x1;x++) if(x&&x%labelEvery===0){el("line",{x1:X(x),y1:Y(0)-4,x2:X(x),y2:Y(0)+4,stroke:BLACK,"stroke-width":1.5},svg);txt(svg,X(x),Y(0)+17,minus(x),{"text-anchor":"middle"});}
+  for(let y=y0+1;y<y1;y++) if(y&&y%labelEvery===0){el("line",{x1:X(0)-4,y1:Y(y),x2:X(0)+4,y2:Y(y),stroke:BLACK,"stroke-width":1.5},svg);txt(svg,X(0)-7,Y(y)+4.5,minus(y),{"text-anchor":"end"});}
+  txt(svg,X(0)-6,Y(0)+16,"O",{"text-anchor":"end","font-style":"italic"});
+  const curves=el("g",{"clip-path":`url(#${id}c)`},svg), pts=el("g",{},svg);
+  const hover=el("circle",{r:9,fill:"none",stroke:BLACK,"stroke-width":1.5,"stroke-dasharray":"3 3",visibility:"hidden"},svg);
+  function at(evt){
+    const p=svg.createSVGPoint();p.x=evt.clientX;p.y=evt.clientY;
+    const q=p.matrixTransform(svg.getScreenCTM().inverse());
+    const x=Math.round(x0+(q.x-P)/sx), y=Math.round(y0+(H-P-q.y)/sy);
+    return (x<x0||x>x1||y<y0||y>y1)?null:{x,y};
+  }
+  function curve(f,color,dash){
+    let d="",pen=false;const n=500;
+    for(let i=0;i<=n;i++){const x=x0+(x1-x0)*i/n,y=f(x);
+      if(!isFinite(y)||y>y1+40||y<y0-40){pen=false;continue;}
+      d+=(pen?"L":"M")+X(x).toFixed(1)+" "+Y(y).toFixed(1);pen=true;}
+    el("path",{d,fill:"none",stroke:color,"stroke-width":3,"stroke-linecap":"round","stroke-dasharray":dash||"none"},curves);
+  }
+  function vline(x,color){el("line",{x1:X(x),y1:Y(y0),x2:X(x),y2:Y(y1),stroke:color,"stroke-width":3},curves);}
+  function dot(p,color,name){
+    el("circle",{cx:X(p.x),cy:Y(p.y),r:6.5,fill:color,stroke:"#fff","stroke-width":2},pts);
+    const right=p.x<x1-3, up=p.y<y1-1;
+    const t=txt(pts,X(p.x)+(right?10:-10),Y(p.y)+(up?-10:20),`${name}(${minus(p.x)}, ${minus(p.y)})`,{"text-anchor":right?"start":"end","font-size":14,"font-weight":700,fill:color,stroke:"#fff","stroke-width":4,"paint-order":"stroke"});
+    return t;
+  }
+  function clear(){curves.innerHTML="";pts.innerHTML="";}
+  return {svg,at,curve,vline,dot,clear,hover,X,Y};
+}
+
+/* ---- generic "pick A, then B" quiz ---- */
+function pickQuiz(cfg){
+  const root=document.getElementById(cfg.id);
+  const pl=plane(root.querySelector(".gq-plot"),cfg.x,cfg.y,cfg.label||2);
+  const status=root.querySelector(".gq-status"), ans=root.querySelector(".gq-ans");
+  let A=cfg.A, B=cfg.B, mode="done";
+  const say=(s,err)=>{status.innerHTML=s;status.classList.toggle("err",!!err);};
+  function draw(){
+    pl.clear();
+    if(A&&B) cfg.draw(pl,A,B);
+    if(A) pl.dot(A,RED,"A");
+    if(B) pl.dot(B,BLUE,"B");
+    pl.svg.classList.toggle("pick",mode!=="done");
+  }
+  pl.svg.addEventListener("mousemove",e=>{
+    const p=mode==="done"?null:pl.at(e);
+    if(p){pl.hover.setAttribute("cx",pl.X(p.x));pl.hover.setAttribute("cy",pl.Y(p.y));pl.hover.setAttribute("visibility","visible");}
+    else pl.hover.setAttribute("visibility","hidden");
+  });
+  pl.svg.addEventListener("mouseleave",()=>pl.hover.setAttribute("visibility","hidden"));
+  pl.svg.addEventListener("click",e=>{
+    if(mode==="done") return;
+    const p=pl.at(e); if(!p) return;
+    if(mode==="A"){
+      const err=cfg.checkA&&cfg.checkA(p); if(err) return say(err,true);
+      A=p; mode="B"; say(cfg.msgB);
+    } else {
+      const err=cfg.checkB(A,p); if(err) return say(err,true);
+      B=p; mode="done"; pl.hover.setAttribute("visibility","hidden"); say(cfg.msgDone);
+    }
+    draw();
+  });
+  root.querySelector(".gq-new").onclick=()=>{A=B=null;mode="A";ans.hidden=true;say(cfg.msgA);draw();};
+  root.querySelector(".gq-answer").onclick=()=>{
+    if(mode!=="done") return say("Place both points first, then press Answer.",true);
+    ans.innerHTML=cfg.answer(A,B); ans.hidden=false;
+  };
+  say(cfg.msgDone); draw();
+}
+
+/* ---- Linear: y = 1/2 x + 1 by default ---- */
+pickQuiz({
+  id:"gq-line", x:[-8,8], y:[-8,8], A:{x:0,y:1}, B:{x:2,y:2},
+  msgA:"Click an integer point on the grid for <span class='c-red'>A</span>.",
+  msgB:"Now click a second point for <span class='c-blue'>B</span>.",
+  msgDone:"Write the equation of the green line, then press Answer.",
+  checkB:(A,B)=>(A.x===B.x&&A.y===B.y)?"B must be a different point from A.":null,
+  draw(pl,A,B){
+    if(A.x===B.x) return pl.vline(A.x,GREEN);
+    const m=(B.y-A.y)/(B.x-A.x); pl.curve(x=>A.y+m*(x-A.x),GREEN);
+  },
+  answer(A,B){
+    const dy=B.y-A.y, dx=B.x-A.x;
+    if(dx===0) return `<div class="gq-eq">${X_} = ${minus(A.x)}</div><p>A and B have the same <i>x</i>-coordinate, so the line is vertical and its slope is undefined.</p>`;
+    const m=new F(dy,dx), b=new F(A.y*dx-dy*A.x,dx);
+    return `<div class="gq-eq">${Y_} = ${poly([[m,X_],[b,""]])}</div>
+      <p>Slope <i>m</i> = rise ÷ run = (<i>y</i><sub>B</sub> − <i>y</i><sub>A</sub>) ÷ (<i>x</i><sub>B</sub> − <i>x</i><sub>A</sub>) = ${minus(dy)} ÷ ${minus(dx)} = ${fh(m)}</p>
+      <p><i>y</i>-intercept <i>b</i> = ${fh(b)}, so the line crosses the <i>y</i>-axis at (0, ${fh(b)}).</p>`;
+  }
+});
+
+/* ---- Quadratic: y = (x − 1)² + 2 by default ---- */
+function vertexForm(a,h,k){
+  const coef=(a.n===1&&a.d===1)?"":(a.n===-1&&a.d===1)?"−":fh(a);
+  const inner=h===0?X_:`(${X_} ${h>0?"−":"+"} ${Math.abs(h)})`;
+  const sq=h===0?`${X_}<sup>2</sup>`:`${inner}<sup>2</sup>`;
+  const kk=k===0?"":` ${k>0?"+":"−"} ${Math.abs(k)}`;
+  return `${coef}${sq}${kk}`;
+}
+pickQuiz({
+  id:"gq-quad", x:[-8,8], y:[-8,8], A:{x:1,y:2}, B:{x:0,y:3},
+  msgA:"Click an integer point for the vertex <span class='c-red'>A</span>.",
+  msgB:"Now click another point on the parabola for <span class='c-blue'>B</span>.",
+  msgDone:"Write the equation of the green parabola, then press Answer.",
+  checkB(A,B){
+    if(B.x===A.x) return "B can't be straight above or below the vertex. Pick a point with a different x.";
+    if(B.y===A.y) return "B can't be level with the vertex (that would make a = 0). Pick a higher or lower point.";
+    return null;
+  },
+  draw(pl,A,B){const a=(B.y-A.y)/((B.x-A.x)**2); pl.curve(x=>a*(x-A.x)**2+A.y,GREEN);},
+  answer(A,B){
+    const h=A.x,k=A.y,dx=B.x-h, a=new F(B.y-k,dx*dx);
+    const bq=a.mul(new F(-2*h)), cq=a.mul(new F(h*h)).add(new F(k));
+    return `<div class="gq-eq">${Y_} = ${vertexForm(a,h,k)}</div>
+      <p>Vertex form <i>y</i> = <i>a</i>(<i>x</i> − <i>h</i>)<sup>2</sup> + <i>k</i> with vertex (<i>h</i>, <i>k</i>) = (${minus(h)}, ${minus(k)}).
+      Put in B: ${minus(B.y)} = <i>a</i>(${minus(B.x)} − ${h<0?"("+minus(h)+")":h})<sup>2</sup> + ${k<0?"("+minus(k)+")":k}, so <i>a</i> = ${fh(a)}.</p>
+      <p>Standard form: <i>y</i> = ${poly([[a,X_+"<sup>2</sup>"],[bq,X_],[cq,""]])}. The parabola opens ${a.n>0?"up, so the vertex is a minimum":"down, so the vertex is a maximum"}.</p>`;
+  }
+});
+
+/* ---- Exponential: y = 2^x by default (most-tested topic not covered above) ---- */
+function intRoot(v,n){const r=Math.round(Math.pow(v,1/n));return r**n===v?r:null;}
+function expBase(A,B){ // returns {exact:F|null, val:number}
+  const r=new F(B.y,A.y), n=Math.abs(B.x);
+  const p=intRoot(r.n,n), q=intRoot(r.d,n);
+  let exact=(p&&q)?new F(p,q):null;
+  if(exact&&B.x<0) exact=new F(exact.d,exact.n);
+  return {exact,val:Math.pow(r.val(),1/B.x)};
+}
+pickQuiz({
+  id:"gq-exp", x:[-6,6], y:[-4,12], A:{x:0,y:1}, B:{x:2,y:4},
+  msgA:"Click a point on the <i>y</i>-axis (<i>x</i> = 0) for the <i>y</i>-intercept <span class='c-red'>A</span>.",
+  msgB:"Now click a second integer point for <span class='c-blue'>B</span>.",
+  msgDone:"Find <i>a</i> and <i>b</i> for the green curve, then press Answer.",
+  checkA:p=>p.x!==0?"A is the y-intercept, so it must be on the y-axis (x = 0).":p.y===0?"An exponential curve never passes through (0, 0). Pick another point on the y-axis.":null,
+  checkB(A,B){
+    if(B.x===0) return "B needs a different x than A.";
+    if(B.y===0||Math.sign(B.y)!==Math.sign(A.y)) return "B must be on the same side of the x-axis as A.";
+    if(B.y===A.y) return "B can't be level with A (that would make b = 1, a flat line).";
+    return null;
+  },
+  draw(pl,A,B){const b=expBase(A,B).val; pl.curve(x=>A.y*Math.pow(b,x),GREEN);},
+  answer(A,B){
+    const {exact,val}=expBase(A,B), a=A.y;
+    const aStr=a===1?"":a===-1?"−":minus(a);
+    let bStr, bShow;
+    if(exact){bShow=fh(exact); bStr=exact.d===1&&a===1?bShow:`(${bShow})`;}
+    else {bShow="≈ "+val.toFixed(4); bStr=`(${val.toFixed(4)})`;}
+    const pct=Math.abs(val-1)*100, pctS=(Math.round(pct*100)/100).toString();
+    const rule=a>0?(val>1?`<i>b</i> &gt; 1, so <i>y</i> grows by ${pctS}% each time <i>x</i> increases by 1.`:`0 &lt; <i>b</i> &lt; 1, so <i>y</i> decreases by ${pctS}% each time <i>x</i> increases by 1.`)
+      :`<i>a</i> &lt; 0 flips the curve below the <i>x</i>-axis; |<i>y</i>| ${val>1?"grows":"shrinks"} by ${pctS}% per unit of <i>x</i>.`;
+    return `<div class="gq-eq">${Y_} = ${aStr}${bStr}<sup>${X_}</sup></div>
+      <p><i>a</i> = ${minus(a)} because the curve crosses the <i>y</i>-axis at A(0, ${minus(a)}).</p>
+      <p>Put in B: ${minus(B.y)} = ${minus(a)}·<i>b</i><sup>${minus(B.x)}</sup>, so <i>b</i> ${exact?"= "+bShow:bShow}.</p>
+      <p>${rule} The curve never touches its asymptote <i>y</i> = 0.</p>`;
+  }
+});
+
+/* ---- Angles on a circle ---- */
+(function(){
+  const root=document.getElementById("gq-angle");
+  const W=420,H=420,cx=200,cy=230,R=140;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,class:"gq-svg",role:"img","aria-label":"angle on a circle"},root.querySelector(".gq-plot"));
+  const defs=el("defs",{},svg);
+  const mk=el("marker",{id:"gqArc",viewBox:"0 0 10 10",refX:6,refY:5,markerWidth:6,markerHeight:6,orient:"auto"},defs);
+  el("path",{d:"M0,0 L10,5 L0,10 z",fill:GREEN},mk);
+  const P=d=>[cx+R*Math.cos(d*Math.PI/180),cy-R*Math.sin(d*Math.PI/180)];
+  el("line",{x1:cx-R-20,y1:cy,x2:cx+R+24,y2:cy,stroke:BLACK,"stroke-opacity":.35},svg);
+  el("line",{x1:cx,y1:cy+R+20,x2:cx,y2:cy-R-24,stroke:BLACK,"stroke-opacity":.35},svg);
+  const q=16; el("path",{d:`M${cx+q} ${cy} L${cx+q} ${cy-q} L${cx} ${cy-q}`,fill:"none",stroke:BLACK,"stroke-width":1.6},svg); // right-angle mark at 90°
+  el("circle",{cx,cy,r:R,fill:"none",stroke:BLUE,"stroke-width":3},svg);
+  el("line",{x1:cx,y1:cy,x2:cx+R,y2:cy,stroke:RED,"stroke-width":3.5},svg);
+  el("circle",{cx:cx+R,cy,r:6,fill:RED,stroke:"#fff","stroke-width":2},svg);
+  txt(svg,cx+R+6,cy+22,"(1, 0)",{"font-size":14,"font-weight":700,fill:RED});
+  txt(svg,cx-8,cy+20,"(0, 0)",{"font-size":13,"text-anchor":"end"});
+  txt(svg,cx+R+24,cy+5,"0°",{"font-size":15,"font-weight":700,fill:RED});
+  const ansLbl=txt(svg,0,0,"",{"font-size":16,"font-weight":700,fill:GREEN,"text-anchor":"middle",visibility:"hidden"});
+  el("circle",{cx,cy,r:4,fill:BLACK},svg);
+  const arc=el("path",{fill:"none",stroke:GREEN,"stroke-width":2.5,"marker-end":"url(#gqArc)"},svg);
+  const theta=txt(svg,0,0,"θ",{"font-size":18,"font-style":"italic","font-weight":700,fill:GREEN,"text-anchor":"middle"});
+  const ray=el("line",{x1:cx,y1:cy,stroke:GREEN,"stroke-width":3.5,"stroke-linecap":"round"},svg);
+  const tip=el("circle",{r:7,fill:GREEN,stroke:"#fff","stroke-width":2},svg);
+  function set(d){
+    const [x,y]=P(d); ray.setAttribute("x2",x);ray.setAttribute("y2",y);tip.setAttribute("cx",x);tip.setAttribute("cy",y);
+    const r=44, rad=Math.max(d-6,0)*Math.PI/180;
+    arc.setAttribute("d",d<8?"":`M${cx+r} ${cy} A${r} ${r} 0 0 0 ${cx+r*Math.cos(rad)} ${cy-r*Math.sin(rad)}`);
+    const m=d/2*Math.PI/180; theta.setAttribute("x",cx+66*Math.cos(m)); theta.setAttribute("y",cy-66*Math.sin(m)+6);
+    theta.setAttribute("visibility",d<8?"hidden":"visible");
+  }
+  const INFO={30:["π/6","(√3/2, 1/2)"],45:["π/4","(√2/2, √2/2)"],60:["π/3","(1/2, √3/2)"],90:["π/2","(0, 1)"]};
+  const status=root.querySelector(".gq-status"), ans=root.querySelector(".gq-ans");
+  const btnNew=root.querySelector(".gq-new"), btnAns=root.querySelector(".gq-answer");
+  let cur=60, busy=false;
+  function reset(){ans.hidden=true;ansLbl.setAttribute("visibility","hidden");}
+  btnAns.onclick=()=>{
+    if(busy) return;
+    const [r,pt]=INFO[cur], rad=cur*Math.PI/180;
+    ansLbl.textContent=cur+"°";
+    ansLbl.setAttribute("x",cx+(R+26)*Math.cos(rad)+(cur===90?0:8)); ansLbl.setAttribute("y",cy-(R+26)*Math.sin(rad)+6);
+    ansLbl.setAttribute("visibility","visible");
+    ans.innerHTML=`<div class="gq-eq">θ = ${cur}° = ${r} radians</div><p>The green ray meets the circle at (cos ${cur}°, sin ${cur}°) = ${pt}.</p>`;
+    ans.hidden=false;
+  };
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function animate(from,to,ms,done){
+    if(reduce){set(to);return done();}
+    const t0=performance.now();
+    (function step(t){const u=Math.min(1,(t-t0)/ms), e=1-Math.pow(1-u,3); set(from+(to-from)*e); u<1?requestAnimationFrame(step):done();})(t0);
+  }
+  btnNew.onclick=()=>{
+    if(busy) return;
+    let stop,snap;
+    do{ stop=18+Math.random()*82; snap=[30,45,60,90].reduce((a,b)=>Math.abs(b-stop)<Math.abs(a-stop)?b:a); }while(snap===cur);
+    cur=snap; busy=true; btnNew.disabled=btnAns.disabled=true; reset();
+    status.textContent="The point is moving counterclockwise from (1, 0)…";
+    set(0);
+    animate(0,stop,500+stop*14,()=>setTimeout(()=>animate(stop,snap,350,()=>{
+      busy=false; btnNew.disabled=btnAns.disabled=false; reset();
+      status.textContent="It stopped. What is θ? Press Answer to check.";
+    }),180));
+  };
+  set(60); status.textContent="What is θ? Press Answer to check, or Random for a new angle.";
+})();
+})();
+
 </script>
 </body>
 </html>
