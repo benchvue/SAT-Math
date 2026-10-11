@@ -109,6 +109,31 @@ sup,sub{font-size:.7em;line-height:0}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
 .tabs button{border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:8px 18px;cursor:pointer;font-weight:700;font-size:16px}
 .tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.tabs a.tablink{border:1.5px solid var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:8px 18px;font-weight:700;font-size:16px;text-decoration:none}
+.gq-learn{display:inline-block;font-size:14px;font-weight:700;color:var(--accent);margin:0 0 8px;text-decoration:none}
+.gq-learn:hover{text-decoration:underline}
+.sc{padding-top:30px;padding-bottom:8px}
+.sc-intro{max-width:66ch;color:var(--muted);margin:0 0 18px}
+.sc-calc{border:2px solid var(--ink);border-radius:12px;padding:18px 20px;max-width:640px;margin-bottom:24px}
+.sc-calc h3{font-family:var(--head);font-weight:700;font-size:20px;margin:0 0 10px}
+.sc-calc .rowin{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700}
+.sc-calc input[type=number]{font:inherit;font-size:20px;width:90px;padding:6px 8px;border:1.5px solid var(--ink);border-radius:8px;text-align:center}
+.sc-calc input[type=range]{width:100%;accent-color:var(--accent);margin:12px 0 4px}
+.sc-res{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:8px}
+.sc-res .big{font-family:var(--head);font-weight:700;font-size:44px;color:var(--accent);line-height:1}
+.sc-res small{color:var(--muted);font-size:15px}
+.sc-bar{position:relative;height:12px;background:var(--grid);border-radius:6px;margin:14px 0 4px}
+.sc-bar i{position:absolute;top:0;bottom:0;background:var(--accent);border-radius:6px}
+.sc-axis{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.sc-tables{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:760px}
+@media (max-width:640px){.sc-tables{grid-template-columns:minmax(0,1fr)}}
+table.sct{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:16px}
+table.sct th,table.sct td{border:1px solid var(--line);padding:5px 10px;text-align:center}
+table.sct thead th{background:#F6F8FB;font-size:14px}
+table.sct td:first-child{font-weight:700;color:var(--accent)}
+table.sct tr.hl td{background:var(--accent-soft);font-weight:700}
+table.sct tbody tr{cursor:pointer}
+.sc-note{font-size:14px;color:var(--muted);max-width:760px;margin-top:14px}
 .gq{padding-top:30px;padding-bottom:8px}
 .gq-intro{max-width:64ch;color:var(--muted);margin:0 0 20px}
 .gq-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;max-width:640px}
@@ -156,7 +181,7 @@ sup,sub{font-size:.7em;line-height:0}
   <header class="top"><div class="wrap">
     <h1>SAT Math practice, one topic at a time</h1><br>
     <p class="lede">Pick one of the 24 topics. Every question appears exactly as printed in Bluebook practice tests 4 through 11, one per page, with instant checking and a short explanation.</p>
-    <nav class="tabs" aria-label="Sections"><button data-tab="topics" aria-selected="true">Practice by topic</button><button data-tab="gq" aria-selected="false">Graph quizzes</button></nav>
+    <nav class="tabs" aria-label="Sections"><button data-tab="topics" aria-selected="true">Practice by topic</button><button data-tab="gq" aria-selected="false">Graph quizzes</button><button data-tab="score" aria-selected="false">Math score table</button><a class="tablink" href="learning.html">Learning path →</a></nav>
   </div></header>
   <main class="wrap" id="domains"></main>
 <section class="wrap gq" id="gq" hidden>
@@ -217,6 +242,22 @@ sup,sub{font-size:.7em;line-height:0}
     <ul id="gq-list"></ul>
     <button class="btn" id="gq-retry">Try again</button>
   </section>
+</section>
+<section class="wrap sc" id="score" hidden>
+  <p class="sc-intro">Convert the number of math questions you got right (out of 54, both modules) into an SAT Math section score range from 200 to 800.</p>
+  <div class="sc-calc">
+    <h3>Score calculator</h3>
+    <label class="rowin" for="scIn">Correct answers <input type="number" id="scIn" min="0" max="54" value="30" inputmode="numeric"> <span style="font-weight:400;color:var(--muted)">out of 54</span></label>
+    <input type="range" id="scRange" min="0" max="54" value="30" aria-label="Correct answers">
+    <div class="sc-res"><span class="big" id="scOut">470–510</span><small id="scMid">Math section score range</small></div>
+    <div class="sc-bar" aria-hidden="true"><i id="scBar"></i></div>
+    <div class="sc-axis"><span>200</span><span>400</span><span>600</span><span>800</span></div>
+  </div>
+  <div class="sc-tables">
+    <table class="sct"><thead><tr><th>Raw score<br>(# correct)</th><th>Lower</th><th>Upper</th></tr></thead><tbody><tr data-r="0"><td>0</td><td>200</td><td>200</td></tr><tr data-r="1"><td>1</td><td>210</td><td>220</td></tr><tr data-r="2"><td>2</td><td>210</td><td>220</td></tr><tr data-r="3"><td>3</td><td>210</td><td>230</td></tr><tr data-r="4"><td>4</td><td>220</td><td>240</td></tr><tr data-r="5"><td>5</td><td>230</td><td>250</td></tr><tr data-r="6"><td>6</td><td>240</td><td>270</td></tr><tr data-r="7"><td>7</td><td>250</td><td>290</td></tr><tr data-r="8"><td>8</td><td>260</td><td>320</td></tr><tr data-r="9"><td>9</td><td>270</td><td>330</td></tr><tr data-r="10"><td>10</td><td>290</td><td>350</td></tr><tr data-r="11"><td>11</td><td>310</td><td>350</td></tr><tr data-r="12"><td>12</td><td>330</td><td>370</td></tr><tr data-r="13"><td>13</td><td>340</td><td>380</td></tr><tr data-r="14"><td>14</td><td>350</td><td>390</td></tr><tr data-r="15"><td>15</td><td>350</td><td>390</td></tr><tr data-r="16"><td>16</td><td>360</td><td>400</td></tr><tr data-r="17"><td>17</td><td>370</td><td>410</td></tr><tr data-r="18"><td>18</td><td>370</td><td>410</td></tr><tr data-r="19"><td>19</td><td>380</td><td>420</td></tr><tr data-r="20"><td>20</td><td>390</td><td>430</td></tr><tr data-r="21"><td>21</td><td>390</td><td>430</td></tr><tr data-r="22"><td>22</td><td>400</td><td>440</td></tr><tr data-r="23"><td>23</td><td>410</td><td>450</td></tr><tr data-r="24"><td>24</td><td>410</td><td>450</td></tr><tr data-r="25"><td>25</td><td>420</td><td>460</td></tr><tr data-r="26"><td>26</td><td>430</td><td>470</td></tr><tr data-r="27"><td>27</td><td>440</td><td>480</td></tr></tbody></table>
+    <table class="sct"><thead><tr><th>Raw score<br>(# correct)</th><th>Lower</th><th>Upper</th></tr></thead><tbody><tr data-r="28"><td>28</td><td>450</td><td>490</td></tr><tr data-r="29"><td>29</td><td>460</td><td>500</td></tr><tr data-r="30"><td>30</td><td>470</td><td>510</td></tr><tr data-r="31"><td>31</td><td>480</td><td>520</td></tr><tr data-r="32"><td>32</td><td>490</td><td>530</td></tr><tr data-r="33"><td>33</td><td>490</td><td>550</td></tr><tr data-r="34"><td>34</td><td>500</td><td>560</td></tr><tr data-r="35"><td>35</td><td>510</td><td>570</td></tr><tr data-r="36"><td>36</td><td>530</td><td>590</td></tr><tr data-r="37"><td>37</td><td>540</td><td>600</td></tr><tr data-r="38"><td>38</td><td>550</td><td>610</td></tr><tr data-r="39"><td>39</td><td>560</td><td>620</td></tr><tr data-r="40"><td>40</td><td>570</td><td>630</td></tr><tr data-r="41"><td>41</td><td>590</td><td>650</td></tr><tr data-r="42"><td>42</td><td>600</td><td>660</td></tr><tr data-r="43"><td>43</td><td>610</td><td>670</td></tr><tr data-r="44"><td>44</td><td>620</td><td>680</td></tr><tr data-r="45"><td>45</td><td>640</td><td>700</td></tr><tr data-r="46"><td>46</td><td>650</td><td>710</td></tr><tr data-r="47"><td>47</td><td>660</td><td>720</td></tr><tr data-r="48"><td>48</td><td>680</td><td>740</td></tr><tr data-r="49"><td>49</td><td>700</td><td>760</td></tr><tr data-r="50"><td>50</td><td>710</td><td>770</td></tr><tr data-r="51"><td>51</td><td>730</td><td>780</td></tr><tr data-r="52"><td>52</td><td>750</td><td>800</td></tr><tr data-r="53"><td>53</td><td>770</td><td>800</td></tr><tr data-r="54"><td>54</td><td>790</td><td>800</td></tr></tbody></table>
+  </div>
+  <p class="sc-note">Source: College Board practice test scoring guide (Raw Score Conversion Table, Math section). Each official practice test has its own conversion table, so treat this as an estimate for any one test.</p>
 </section>
 
   <footer class="wrap">432 questions from 8 practice tests. Tip: use the ← and → keys to move between questions.</footer>
@@ -342,6 +383,26 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowLeft"&&idx>0)$("prevBtn").click();
 });
 renderHome();
+
+/* ================= Math score conversion ================= */
+(function(){
+  const M=[[200, 200], [210, 220], [210, 220], [210, 230], [220, 240], [230, 250], [240, 270], [250, 290], [260, 320], [270, 330], [290, 350], [310, 350], [330, 370], [340, 380], [350, 390], [350, 390], [360, 400], [370, 410], [370, 410], [380, 420], [390, 430], [390, 430], [400, 440], [410, 450], [410, 450], [420, 460], [430, 470], [440, 480], [450, 490], [460, 500], [470, 510], [480, 520], [490, 530], [490, 550], [500, 560], [510, 570], [530, 590], [540, 600], [550, 610], [560, 620], [570, 630], [590, 650], [600, 660], [610, 670], [620, 680], [640, 700], [650, 710], [660, 720], [680, 740], [700, 760], [710, 770], [730, 780], [750, 800], [770, 800], [790, 800]];
+  const inp=document.getElementById("scIn"), rng=document.getElementById("scRange");
+  function set(r,from){
+    r=Math.max(0,Math.min(54,Math.round(+r||0)));
+    if(from!=="in") inp.value=r; if(from!=="range") rng.value=r;
+    const [lo,hi]=M[r];
+    document.getElementById("scOut").textContent=lo===hi?String(lo):lo+"–"+hi;
+    document.getElementById("scMid").textContent=`${r} of 54 correct (${Math.round(r/54*100)}%) · about ${Math.round((lo+hi)/20)*10}`;
+    const bar=document.getElementById("scBar"); bar.style.left=((lo-200)/6)+"%"; bar.style.width=Math.max(1,(hi-lo)/6)+"%";
+    document.querySelectorAll("table.sct tbody tr").forEach(tr=>tr.classList.toggle("hl",+tr.dataset.r===r));
+  }
+  inp.oninput=()=>{ if(inp.value!=="") set(inp.value,"in"); };
+  inp.onblur=()=>set(inp.value);
+  rng.oninput=()=>set(rng.value,"range");
+  document.querySelectorAll("table.sct tbody tr").forEach(tr=>tr.onclick=()=>set(tr.dataset.r));
+  set(30);
+})();
 /* ================= Tabs ================= */
 (function(){
   const tabs=document.querySelectorAll(".tabs button");
@@ -349,10 +410,13 @@ renderHome();
     tabs.forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===name?"true":"false"));
     document.getElementById("domains").hidden = name!=="topics";
     document.getElementById("gq").hidden = name!=="gq";
-    try{ history.replaceState(null,"",name==="gq"?"#graph-quizzes":location.pathname+location.search); }catch(e){}
+    document.getElementById("score").hidden = name!=="score";
+    try{ history.replaceState(null,"",name==="gq"?"#graph-quizzes":name==="score"?"#score-table":location.pathname+location.search); }catch(e){}
   }
   tabs.forEach(b=>b.onclick=()=>show(b.dataset.tab));
   if(location.hash==="#graph-quizzes") show("gq");
+  if(location.hash==="#score-table") show("score");
+  const tm=location.hash.match(/^#topic-(\d+)$/); if(tm&&CATS[+tm[1]]) openCat(+tm[1]);
 })();
 
 /* ================= Graph quizzes ================= */
@@ -474,6 +538,8 @@ function renderScore(){
   SCORE_ITEMS.forEach(([id])=>{const b=document.querySelector(`#${id} .gq-badge`); if(b) b.hidden=!solved[id];});
 }
 SCORE_ITEMS.forEach(([id])=>{const h=document.querySelector(`#${id} h3`); if(h) h.insertAdjacentHTML("beforeend",'<span class="gq-badge" hidden>Solved ✓</span>');});
+const LEARN={"gq-angle":["angles","Angles and triangles"],"gq-pyth":["pythagorean","Pythagorean theorem"],"gq-line":["linear","Linear functions"],"gq-quad":["quadratic","Quadratic functions"],"gq-exp":["exponential","Exponential functions"]};
+Object.entries(LEARN).forEach(([id,[k,n]])=>{const h=document.querySelector(`#${id} h3`); if(h) h.insertAdjacentHTML("afterend",`<a class="gq-learn" href="learning.html#${k}">Learn ${n.toLowerCase()} step by step →</a>`);});
 function markSolved(id){ if(!solved[id]){solved[id]=true;saveScore();} renderScore(); }
 document.getElementById("gq-retry").onclick=()=>{
   solved={}; saveScore();

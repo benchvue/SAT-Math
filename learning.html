@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAT Math Learning Path</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="learning/lab.css">
+<style>
+.hero h1{max-width:18ch}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.jump a{border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:7px 14px;font-weight:700;text-decoration:none;color:var(--ink);font-size:15px}
+.jump a small{color:var(--muted);font-weight:400;margin-left:2px}
+.jump a.home{background:var(--ink);color:#fff}
+.howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:26px 0 8px}
+@media (max-width:760px){.howto{grid-template-columns:minmax(0,1fr)}}
+.howto div{border-left:4px solid var(--accent);padding:4px 0 4px 12px}
+.howto b{display:block;font-family:var(--head);font-size:18px}
+.howto span{color:var(--muted);font-size:15px}
+.grp{margin:40px 0;scroll-margin-top:12px}
+.grp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.grp-head h2{font-family:var(--head);font-weight:700;font-size:clamp(24px,4vw,32px);margin:0;letter-spacing:-.01em}
+.count{color:var(--muted);font-weight:700}
+.grp-intro{color:var(--muted);max-width:70ch;margin:10px 0 16px}
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:760px){ol.steps{grid-template-columns:minmax(0,1fr)}}
+a.step{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);height:100%;transition:border-color .15s,background .15s}
+a.step:hover{border-color:var(--accent);background:var(--accent-soft)}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+.body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.body b{line-height:1.25}
+.desc{color:var(--muted);font-size:15px}
+.tag{align-self:flex-start;margin-top:4px;font-size:12px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.tag.new{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
+.seen{margin-left:auto;flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);color:transparent;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+a.step.visited .seen{background:var(--ok);border-color:var(--ok);color:#fff}
+a.step.visited .num{background:var(--ok)}
+.then{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px;padding:12px 14px;background:#F6F8FB;border-radius:12px}
+.then-label{font-weight:700;margin-right:4px}
+.then .btn{font-size:15px;padding:7px 14px}
+footer.hub-foot{color:var(--muted);font-size:14px;padding:20px 0 48px;border-top:1px solid var(--line);margin-top:30px}
+</style>
+</head>
+<body>
+<header class="lab-top hero"><div class="lab-wrap">
+  <nav class="crumbs"><a href="index.html">← SAT Math practice</a><span>Learning path</span></nav>
+  <h1><span>Learn the ideas behind SAT math</span></h1>
+  <p class="goal"><span>42 short, hands-on lessons in 6 groups. Each group starts with a picture of the idea, builds it one step at a time, and ends with real SAT questions on the same topic.</span></p>
+  <nav class="jump" aria-label="Groups"><a class="home" href="index.html">SAT practice</a><a href="#linear">Linear functions <small>8</small></a><a href="#quadratic">Quadratic functions <small>9</small></a><a href="#exponential">Exponential functions <small>8</small></a><a href="#angles">Angles and triangles <small>9</small></a><a href="#pythagorean">Pythagorean theorem <small>4</small></a><a href="#circles">Circles on the coordinate plane <small>4</small></a></nav>
+</div></header>
+<main class="lab-wrap">
+  <div class="howto">
+    <div><b>1. Go in order</b><span>Each step uses the one before it. Steps you open get a green check.</span></div>
+    <div><b>2. Play, then try</b><span>Move the sliders and press Play first. Then answer the “Try it” questions.</span></div>
+    <div><b>3. Finish with the SAT</b><span>At the end of each group, take the graph quiz and practice the real SAT questions.</span></div>
+  </div>
+<section class="grp" id="linear">
+  <div class="grp-head">
+    <h2>Linear functions</h2>
+    <span class="count" data-group="linear">8 steps</span>
+  </div>
+  <p class="grp-intro">A straight line: every step right adds the same amount. Learn slope and intercept, then write y = mx + b from a graph.</p>
+  <ol class="steps">
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week03/function-2x+1.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week03/function-2x+1.html">
+      <span class="num">1</span>
+      <span class="body"><b>The function machine: f(x) = 2x + 1</b><span class="desc">Put x in, get y out. See a function as a rule.</span><span class="tag">GeoGebra week 3</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week03/function-stacking.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week03/function-stacking.html">
+      <span class="num">2</span>
+      <span class="body"><b>Step-by-step outputs</b><span class="desc">Watch f(0), f(1), f(2)… get calculated one line at a time.</span><span class="tag">GeoGebra week 3</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week03/function-x-y-drawing.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week03/function-x-y-drawing.html">
+      <span class="num">3</span>
+      <span class="body"><b>From table to graph</b><span class="desc">Each (x, f(x)) pair becomes a point on the plane.</span><span class="tag">GeoGebra week 3</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week03/functions-two.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week03/functions-two.html">
+      <span class="num">4</span>
+      <span class="body"><b>Two lines: 2x + 1 vs 2x − 1</b><span class="desc">Same slope, different intercepts: parallel lines.</span><span class="tag">GeoGebra week 3</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week03/function-mx+b.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week03/function-mx+b.html">
+      <span class="num">5</span>
+      <span class="body"><b>Slope m and intercept b</b><span class="desc">Slide m and b in y = mx + b and watch the line move.</span><span class="tag">GeoGebra week 3</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week03/function-mx-a+b.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week03/function-mx-a+b.html">
+      <span class="num">6</span>
+      <span class="body"><b>Point-slope form: m(x − a) + b</b><span class="desc">Shift a line by its point; see the slope triangle.</span><span class="tag">GeoGebra week 3</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week08/linear.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week08/linear.html">
+      <span class="num">7</span>
+      <span class="body"><b>Slope from two points</b><span class="desc">Drag A and B: slope = Δy / Δx, then find b.</span><span class="tag">GeoGebra week 8</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week08/find-linear.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week08/find-linear.html">
+      <span class="num">8</span>
+      <span class="body"><b>Find the linear equation</b><span class="desc">Read a mystery line and write its equation, step by step.</span><span class="tag">GeoGebra week 8</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+  </ol>
+  <div class="then">
+    <span class="then-label">Then practice</span>
+    <a class="btn" href="index.html#graph-quizzes">Graph quiz</a><a class="btn ghost" href="index.html#topic-2">Linear functions & graphs →</a><a class="btn ghost" href="index.html#topic-1">Linear equations →</a><a class="btn ghost" href="index.html#topic-5">Linear models & word problems →</a><a class="btn ghost" href="index.html#topic-3">Systems of linear equations →</a>
+  </div>
+</section><section class="grp" id="quadratic">
+  <div class="grp-head">
+    <h2>Quadratic functions</h2>
+    <span class="count" data-group="quadratic">9 steps</span>
+  </div>
+  <p class="grp-intro">Square the input: the graph bends into a parabola. Learn what a, the vertex and the zeros do.</p>
+  <ol class="steps">
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week04/basic-diagram.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week04/basic-diagram.html">
+      <span class="num">1</span>
+      <span class="body"><b>The squaring machine: f(x) = x²</b><span class="desc">Put x in, get x² out.</span><span class="tag">GeoGebra week 4</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week04/calculate-square.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week04/calculate-square.html">
+      <span class="num">2</span>
+      <span class="body"><b>Why it is called a square</b><span class="desc">x² is the area of a square with side x.</span><span class="tag">GeoGebra week 4</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week04/square-drawing.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week04/square-drawing.html">
+      <span class="num">3</span>
+      <span class="body"><b>Growing squares</b><span class="desc">Watch the area grow faster than the side.</span><span class="tag">GeoGebra week 4</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week04/squre-x-y-drawing.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week04/squre-x-y-drawing.html">
+      <span class="num">4</span>
+      <span class="body"><b>From squares to a parabola</b><span class="desc">Plot (side, area) points and see y = x² appear.</span><span class="tag">GeoGebra week 4</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week04/quadratic-a.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week04/quadratic-a.html">
+      <span class="num">5</span>
+      <span class="body"><b>The coefficient a: narrow or wide</b><span class="desc">Compare x², 2x² and ½x².</span><span class="tag">GeoGebra week 4</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week04/quadratic-c.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week04/quadratic-c.html">
+      <span class="num">6</span>
+      <span class="body"><b>The constant c: shift up or down</b><span class="desc">Compare x², x² + 5 and x² − 5.</span><span class="tag">GeoGebra week 4</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week04/function-quadratic.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week04/function-quadratic.html">
+      <span class="num">7</span>
+      <span class="body"><b>Vertex form: m(x − a)² + b</b><span class="desc">Move the vertex anywhere with sliders.</span><span class="tag">GeoGebra week 4</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/quadratic/factored-form.html" data-id="learning/quadratic/factored-form.html">
+      <span class="num">8</span>
+      <span class="body"><b>Factored form and zeros</b><span class="desc">y = a(x − p)(x − q): the factors give the x-intercepts.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/quadratic/find-quadratic.html" data-id="learning/quadratic/find-quadratic.html">
+      <span class="num">9</span>
+      <span class="body"><b>Find the quadratic equation</b><span class="desc">Read the vertex and one point, then solve for a.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+  </ol>
+  <div class="then">
+    <span class="then-label">Then practice</span>
+    <a class="btn" href="index.html#graph-quizzes">Graph quiz</a><a class="btn ghost" href="index.html#topic-7">Quadratic functions & graphs →</a><a class="btn ghost" href="index.html#topic-6">Quadratic equations →</a><a class="btn ghost" href="index.html#topic-12">Nonlinear systems →</a>
+  </div>
+</section><section class="grp" id="exponential">
+  <div class="grp-head">
+    <h2>Exponential functions</h2>
+    <span class="count" data-group="exponential">8 steps</span>
+  </div>
+  <p class="grp-intro">Multiply by the same number every step. Learn y = a·bˣ, growth vs decay, and how SAT percent problems become equations.</p>
+  <ol class="steps">
+<li><a class="step" href="learning/exponential/01-doubling-machine.html" data-id="learning/exponential/01-doubling-machine.html">
+      <span class="num">1</span>
+      <span class="body"><b>The doubling machine: y = 2ˣ</b><span class="desc">Put x in, get 2 multiplied by itself x times.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/exponential/02-doubling-stack.html" data-id="learning/exponential/02-doubling-stack.html">
+      <span class="num">2</span>
+      <span class="body"><b>Doubling vs adding</b><span class="desc">Stack blocks: ×2 every step beats +2 every step.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/exponential/03-draw-2x.html" data-id="learning/exponential/03-draw-2x.html">
+      <span class="num">3</span>
+      <span class="body"><b>Draw y = 2ˣ point by point</b><span class="desc">Plot the points, including negative x, and meet the asymptote.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/exponential/04-function-race.html" data-id="learning/exponential/04-function-race.html">
+      <span class="num">4</span>
+      <span class="body"><b>Race: 2x vs x² vs 2ˣ</b><span class="desc">Find when the exponential takes the lead for good.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/exponential/05-starting-value-a.html" data-id="learning/exponential/05-starting-value-a.html">
+      <span class="num">5</span>
+      <span class="body"><b>The starting value a</b><span class="desc">In y = a·2ˣ, a is the y-intercept.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/exponential/06-base-b.html" data-id="learning/exponential/06-base-b.html">
+      <span class="num">6</span>
+      <span class="body"><b>The base b: growth or decay</b><span class="desc">b > 1 grows, 0 < b < 1 decays, b = 1 stays flat.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/exponential/07-percent-change.html" data-id="learning/exponential/07-percent-change.html">
+      <span class="num">7</span>
+      <span class="body"><b>Percent growth and decay</b><span class="desc">Turn “increases by 6% a year” into y = a(1.06)ᵗ.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="learning/exponential/08-find-exponential.html" data-id="learning/exponential/08-find-exponential.html">
+      <span class="num">8</span>
+      <span class="body"><b>Find the exponential equation</b><span class="desc">Read a and b from a graph, step by step.</span><span class="tag new">New</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+  </ol>
+  <div class="then">
+    <span class="then-label">Then practice</span>
+    <a class="btn" href="index.html#graph-quizzes">Graph quiz</a><a class="btn ghost" href="index.html#topic-8">Exponential functions & growth →</a><a class="btn ghost" href="index.html#topic-14">Percentages →</a>
+  </div>
+</section><section class="grp" id="angles">
+  <div class="grp-head">
+    <h2>Angles and triangles</h2>
+    <span class="count" data-group="angles">9 steps</span>
+  </div>
+  <p class="grp-intro">Measure angles on a circle, then discover why a triangle's angles add to 180° and a rectangle's to 360°.</p>
+  <ol class="steps">
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week05/circle_angle_v1.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week05/circle_angle_v1.html">
+      <span class="num">1</span>
+      <span class="body"><b>Angles on a circle</b><span class="desc">Drag a ray around a circle and read the angle.</span><span class="tag">GeoGebra week 5</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week05/circle_angle_v2.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week05/circle_angle_v2.html">
+      <span class="num">2</span>
+      <span class="body"><b>Special angles: 30°, 45°, 60°, 90°</b><span class="desc">Jump to the angles the SAT uses most.</span><span class="tag">GeoGebra week 5</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week05/circle_angle_v3.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week05/circle_angle_v3.html">
+      <span class="num">3</span>
+      <span class="body"><b>Degrees and radians</b><span class="desc">Radians = arc length ÷ radius: π/6, π/4, π/3, π/2.</span><span class="tag">GeoGebra week 5</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week05/square-angle-quiz.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week05/square-angle-quiz.html">
+      <span class="num">4</span>
+      <span class="body"><b>Quiz: angles in a square</b><span class="desc">Four right angles make 360°.</span><span class="tag">GeoGebra week 5</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week05/triangle-angle-quiz.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week05/triangle-angle-quiz.html">
+      <span class="num">5</span>
+      <span class="body"><b>Quiz: half a square</b><span class="desc">Cut a square by its diagonal: 90°, 45°, 45°.</span><span class="tag">GeoGebra week 5</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week05/equilateral-triangle-quiz.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week05/equilateral-triangle-quiz.html">
+      <span class="num">6</span>
+      <span class="body"><b>Quiz: equilateral triangle</b><span class="desc">Three equal angles: 60° each.</span><span class="tag">GeoGebra week 5</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week06/triangle_interior_angles.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week06/triangle_interior_angles.html">
+      <span class="num">7</span>
+      <span class="body"><b>Triangle angles add to 180°</b><span class="desc">Drag the corners: the sum never changes.</span><span class="tag">GeoGebra week 6</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week06/right_angles.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week06/right_angles.html">
+      <span class="num">8</span>
+      <span class="body"><b>Right triangles in a circle</b><span class="desc">Keep a 90° angle and watch the other two trade off.</span><span class="tag">GeoGebra week 6</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week06/rectangle_angles.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week06/rectangle_angles.html">
+      <span class="num">9</span>
+      <span class="body"><b>Rectangle angles add to 360°</b><span class="desc">Reshape a rectangle: four 90° corners every time.</span><span class="tag">GeoGebra week 6</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+  </ol>
+  <div class="then">
+    <span class="then-label">Then practice</span>
+    <a class="btn" href="index.html#graph-quizzes">Graph quiz</a><a class="btn ghost" href="index.html#topic-20">Lines, angles & triangles →</a><a class="btn ghost" href="index.html#topic-22">Circles: arcs, angles & inscribed figures →</a>
+  </div>
+</section><section class="grp" id="pythagorean">
+  <div class="grp-head">
+    <h2>Pythagorean theorem</h2>
+    <span class="count" data-group="pythagorean">4 steps</span>
+  </div>
+  <p class="grp-intro">a² + b² = c². See the proof with squares, then use it on triangles anywhere on the plane.</p>
+  <ol class="steps">
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week06/Pythagorean.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week06/Pythagorean.html">
+      <span class="num">1</span>
+      <span class="body"><b>A visual proof of a² + b² = c²</b><span class="desc">Five steps with squares on each side of a 3-4-5 triangle.</span><span class="tag">GeoGebra week 6</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week06/angle_Pythagorean-1.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week06/angle_Pythagorean-1.html">
+      <span class="num">2</span>
+      <span class="body"><b>Right angles in a semicircle</b><span class="desc">Drag B on the circle: the angle at B stays 90°.</span><span class="tag">GeoGebra week 6</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week06/angle_Pythagorean-2.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week06/angle_Pythagorean-2.html">
+      <span class="num">3</span>
+      <span class="body"><b>Legs that stay horizontal and vertical</b><span class="desc">Base and height change, c stays the radius.</span><span class="tag">GeoGebra week 6</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week06/angle_Pythagorean-3.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week06/angle_Pythagorean-3.html">
+      <span class="num">4</span>
+      <span class="body"><b>Hypotenuse from the origin</b><span class="desc">Distance from (0, 0) to (x, y) is √(x² + y²).</span><span class="tag">GeoGebra week 6</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+  </ol>
+  <div class="then">
+    <span class="then-label">Then practice</span>
+    <a class="btn" href="index.html#graph-quizzes">Graph quiz</a><a class="btn ghost" href="index.html#topic-21">Right triangles & trigonometry →</a><a class="btn ghost" href="index.html#topic-20">Lines, angles & triangles →</a>
+  </div>
+</section><section class="grp" id="circles">
+  <div class="grp-head">
+    <h2>Circles on the coordinate plane</h2>
+    <span class="count" data-group="circles">4 steps</span>
+  </div>
+  <p class="grp-intro">The Pythagorean theorem turns into the circle equation x² + y² = r², then (x − a)² + (y − b)² = r².</p>
+  <ol class="steps">
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week07/circle_radius.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week07/circle_radius.html">
+      <span class="num">1</span>
+      <span class="body"><b>x² + y² = r²</b><span class="desc">Change the radius and watch the circle grow.</span><span class="tag">GeoGebra week 7</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week07/pythagorean_proof.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week07/pythagorean_proof.html">
+      <span class="num">2</span>
+      <span class="body"><b>Why x² + y² = 25 is a circle</b><span class="desc">16 slides from right triangles to the circle equation.</span><span class="tag">GeoGebra week 7</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week07/pythagorean_circle.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week07/pythagorean_circle.html">
+      <span class="num">3</span>
+      <span class="body"><b>Symmetry of a circle</b><span class="desc">Reflect points across the axes and the origin.</span><span class="tag">GeoGebra week 7</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+<li><a class="step" href="https://benchvue.github.io/GeoGebra/week07/circle_center.html" target="_blank" rel="noopener" data-id="https://benchvue.github.io/GeoGebra/week07/circle_center.html">
+      <span class="num">4</span>
+      <span class="body"><b>Moving the center: (x − a)² + (y − b)² = r²</b><span class="desc">Slide the center to (a, b).</span><span class="tag">GeoGebra week 7</span></span>
+      <span class="seen" aria-hidden="true">✓</span>
+    </a></li>
+  </ol>
+  <div class="then">
+    <span class="then-label">Then practice</span>
+    <a class="btn" href="index.html#graph-quizzes">Graph quiz</a><a class="btn ghost" href="index.html#topic-23">Circle equations →</a><a class="btn ghost" href="index.html#topic-22">Circles: arcs, angles & inscribed figures →</a>
+  </div>
+</section>
+  <footer class="hub-foot">Lessons marked “GeoGebra week” come from the 8-week GeoGebra course (benchvue.github.io/GeoGebra) and open in a new tab. The 10 lessons marked “New” were added for this site. Your checkmarks are saved only in this browser.</footer>
+</main>
+<script>
+(function(){
+  const KEY="satMathLearningVisited.v1";
+  let seen={};
+  try{ seen=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ seen={}; }
+  const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(seen)); }catch(e){} };
+  function paint(){
+    document.querySelectorAll("a.step").forEach(a=>a.classList.toggle("visited",!!seen[a.dataset.id]));
+    document.querySelectorAll(".grp").forEach(g=>{
+      const all=g.querySelectorAll("a.step").length, done=g.querySelectorAll("a.step.visited").length;
+      g.querySelector(".count").textContent=done?`${done} of ${all} steps opened`:`${all} steps`;
+    });
+  }
+  document.querySelectorAll("a.step").forEach(a=>a.addEventListener("click",()=>{ seen[a.dataset.id]=1; save(); paint(); }));
+  // a lesson page opened from here also counts as seen
+  try{ const r=document.referrer; if(r) document.querySelectorAll("a.step").forEach(a=>{ if(r.endsWith(a.getAttribute("href"))) seen[a.dataset.id]=1; }); save(); }catch(e){}
+  paint();
+})();
+</script>
+</body>
+</html>

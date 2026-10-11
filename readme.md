@@ -16,7 +16,22 @@ This site sorts all **432 questions** (8 tests × 2 modules × 27 questions) int
 - **One question per page**, shown exactly as printed in the official practice test (cropped directly from the PDFs, including graphs, tables and figures), with **Previous** and **Next** buttons. Arrow keys also work.
 - **Instant checking**: A/B/C/D buttons for multiple choice and an answer box for student-produced responses (fractions like `15/17` are accepted), plus a short explanation for every question.
 - **Question breakdown** on the home page showing the total count and each domain's share.
-- **Graph quizzes**: interactive practice for reading angles on a circle, writing linear equations from two points, writing quadratic equations from a vertex and a point, and reading exponential graphs.
+- **Graph quizzes**: five interactive drills (angles on a circle, the Pythagorean theorem, linear, quadratic and exponential graphs) with answer checking and a score out of 100 saved in the browser.
+- **Math score table**: converts the number of correct answers (out of 54) into an SAT Math section score range.
+- **Learning path** (`learning.html`): 42 short, hands-on lessons in 6 groups that build each idea step by step before students practice the matching SAT questions.
+
+## Learning path
+
+| Group | Steps | Leads to SAT topics |
+|---|---|---|
+| Linear functions | 8 | Linear functions & graphs, linear equations, linear models, systems |
+| Quadratic functions | 9 | Quadratic functions & graphs, quadratic equations, nonlinear systems |
+| Exponential functions | 8 | Exponential functions & growth, percentages |
+| Angles and triangles | 9 | Lines, angles & triangles; circles: arcs and angles |
+| Pythagorean theorem | 4 | Right triangles & trigonometry |
+| Circles on the coordinate plane | 4 | Circle equations |
+
+Most lessons come from the 8-week GeoGebra course (https://benchvue.github.io/GeoGebra/). The 8 exponential lessons and 2 quadratic lessons (factored form, find the quadratic) were added in `learning/`. Every group ends with links to the graph quiz and the matching SAT topic, and links like `index.html#topic-8` open a topic directly.
 
 ## Topic distribution
 
@@ -43,5 +58,9 @@ The practice test PDFs used here do not include answer keys, so the answers and 
 
 ## Files
 
-- `index.html`: the whole site in one self-contained file (question images are embedded, so it also works offline).
+- `index.html`: the practice site (question images are embedded, so it also works offline).
+- `learning.html`: the learning path hub.
+- `learning/lab.css`, `learning/lab.js`: shared style and graph helpers for the new lessons.
+- `learning/exponential/*.html`: 8 exponential lessons.
+- `learning/quadratic/*.html`: 2 quadratic lessons.
 - `README.md`: this file.
