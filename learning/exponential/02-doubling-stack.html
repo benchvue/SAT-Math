@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Doubling vs adding · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+.stacks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.stacks svg.plot{max-width:none}
+@media (max-width:640px){.stacks{grid-template-columns:minmax(0,1fr)}}
+.stacks figure{margin:0;text-align:center}
+.stacks figcaption{font-weight:700;margin-bottom:6px}
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 2 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>Doubling vs adding</span></h1>
+  <p class="goal"><span>Both stacks start with 1 block. One adds 2 blocks each step, the other doubles. Slide the step and watch which one runs away.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="done" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="now" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="panel">
+  <div class="ctrl"><label for="nr">Step <i>x</i> <output id="nv">3</output></label><input type="range" id="nr" min="0" max="5" value="3"></div>
+  <div class="stacks">
+    <figure><figcaption><span class="c-blue">Add 2 each step</span><br><span class="m"><i>y</i> = 2<i>x</i> + 1</span></figcaption><svg id="lin" class="plot" viewBox="0 0 520 300" role="img" aria-label="adding stack"></svg></figure>
+    <figure><figcaption><span class="c-green">Double each step</span><br><span class="m"><i>y</i> = 2<sup><i>x</i></sup></span></figcaption><svg id="exp" class="plot" viewBox="0 0 520 300" role="img" aria-label="doubling stack"></svg></figure>
+  </div>
+</div>
+<div class="cols">
+  <div class="panel"><h2>Side by side</h2>
+    <table class="t" id="tab"><thead><tr><th><i>x</i></th><th class="c-blue">2<i>x</i> + 1</th><th>change</th><th class="c-green">2<sup><i>x</i></sup></th><th>change</th></tr></thead><tbody></tbody></table>
+  </div>
+  <div class="panel"><h2>What to notice</h2>
+    <ul class="points">
+      <li>The blue stack grows by the <b>same amount</b> (+2) every step. That is <b>linear</b>.</li>
+      <li>The green stack grows by the <b>same factor</b> (×2) every step. That is <b>exponential</b>.</li>
+      <li>At first adding is ahead (3 vs 2 at <i>x</i> = 1), but by <i>x</i> = 3 doubling has caught up and from then on it pulls away.</li>
+      <li>SAT tip: “increases by the same <u>number</u>” → linear. “increases by the same <u>percent</u> or factor” → exponential.</li>
+    </ul>
+  </div>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/exponential/01-doubling-machine.html">← Step 1: The doubling machine: y = 2ˣ</a><a class="btn" href="../../learning/exponential/03-draw-2x.html">Step 3: Draw y = 2ˣ point by point →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const S=15, G=2, BASE=245;
+function stack(svg,vals,color,label){
+  svg.innerHTML=""; const n=vals.length, colW=4*(S+G), left=14;
+  Lab.el("line",{x1:6,y1:BASE+.5,x2:514,y2:BASE+.5,stroke:"#000","stroke-width":2},svg);
+  vals.forEach((v,i)=>{
+    const cx=left+i*(colW+12), per=4, rows=Math.ceil(v/per);
+    for(let k=0;k<v;k++){const r=Math.floor(k/per), c=k%per;
+      Lab.el("rect",{x:cx+c*(S+G)+3,y:BASE-(r+1)*(S+G),width:S,height:S,rx:2.5,fill:color,"fill-opacity":i===n-1?1:.45},svg);}
+    Lab.txt(svg,cx+colW/2-4,BASE-rows*(S+G)-6,String(v),{"text-anchor":"middle","font-weight":700,"font-size":17,fill:color});
+    Lab.txt(svg,cx+colW/2-4,BASE+20,"x = "+i,{"text-anchor":"middle","font-size":14});
+    if(i>0) Lab.txt(svg,cx-6,BASE+40,label,{"text-anchor":"middle","font-size":14,"font-weight":700,fill:"#5B6578"});
+  });
+}
+function draw(){
+  const n=+$("nr").value; $("nv").textContent=n;
+  const L=[],E=[]; for(let i=0;i<=n;i++){L.push(2*i+1);E.push(2**i);}
+  stack($("lin"),L,Lab.C.blue,"+2"); stack($("exp"),E,Lab.C.green,"×2");
+  $("tab").tBodies[0].innerHTML=L.map((v,i)=>`<tr class="${i===n?"hl":""}"><td>${i}</td><td>${v}</td><td>${i?"+2":"—"}</td><td>${E[i]}</td><td>${i?"×2":"—"}</td></tr>`).join("");
+}
+$("nr").oninput=draw; draw();
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"Keep doubling. How many blocks are in the green stack at x = 7?",form:"2<sup>7</sup> = {a}",check:v=>v.a===128,explain:"32 → 64 → 128."});
+Lab.tryIt(T,{title:"Try it 2",q:"And the blue (adding) stack at x = 7?",form:"2(7) + 1 = {a}",check:v=>v.a===15,explain:"Only 15 blocks: adding grows slowly."});
+Lab.tryIt(T,{title:"Try it 3",q:"A table goes 3, 6, 12, 24. By what factor does y change each step?",form:"× {a}",check:v=>v.a===2,explain:"Each value is double the one before, so it is exponential with b = 2."});
+
+</script>
+</body>
+</html>

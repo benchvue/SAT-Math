@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The starting value a · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 5 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>The starting value a</span></h1>
+  <p class="goal"><span>In y = a·2<sup>x</sup>, the number in front is where the curve starts: the y-intercept. Slide a and watch.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="done" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="done" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="done" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="done" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="now" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div></div>
+  <div class="panel">
+    <div class="eq big" id="eq"></div>
+    <div class="ctrl"><label for="ar"><span><i>a</i> (starting value)</span> <output id="av"></output></label><input type="range" id="ar" min="-4" max="6" step="0.5" value="3"></div>
+    <div class="row" id="chips"></div>
+    <table class="t" id="tab"><thead><tr><th><i>x</i></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead><tbody><tr><th><i>y</i></th><td></td><td></td><td></td><td></td></tr></tbody></table>
+    <div class="note" id="msg"></div>
+  </div>
+</div>
+<div class="panel"><h2>Why a is the y-intercept</h2>
+  <p>At <i>x</i> = 0 the factor 2<sup>0</sup> equals 1, so <i>y</i> = <i>a</i> · 1 = <i>a</i>. On the SAT, the number in front of an exponential model is the <b>initial value</b>: the amount at time 0. In <span class="m"><i>f</i>(<i>t</i>) = 206(1.034)<sup><i>t</i></sup></span>, the account started at $206.</p>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/exponential/04-function-race.html">← Step 4: Race: 2x vs x² vs 2ˣ</a><a class="btn" href="../../learning/exponential/06-base-b.html">Step 6: The base b: growth or decay →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const pl=Lab.plane($("plot"),{x:[-4,4],y:[-12,24],xstep:1,ystep:2,xlabel:1,ylabel:4,h:520});
+pl.curve(x=>2**x,{color:"#8A94A6",dash:"6 6",width:2,layer:pl.svg}); pl.label(3.3,13.5,"2ˣ","#5B6578");
+const cur=pl.curve(x=>3*2**x); const marks=Lab.el("g",{},pl.top);
+[1,3,0.5,-2].forEach(a=>{const b=document.createElement("button");b.className="chip";b.innerHTML="<i>a</i> = "+Lab.fracHTML(a);b.onclick=()=>{$("ar").value=a;draw();};$("chips").appendChild(b);});
+function draw(){
+  const a=+$("ar").value; $("av").innerHTML=Lab.fracHTML(a);
+  pl.setCurve(cur,x=>a*2**x); marks.innerHTML="";
+  const g=Lab.el("g",{},marks);
+  if(a!==0){ pl.dot(0,a,Lab.C.red,`(0, ${Lab.fracText(a)})`,{layer:g,at:[-10,a>0?-10:22,"end"]}); pl.dot(1,2*a,Lab.C.blue,`(1, ${Lab.fracText(2*a)})`,{layer:g}); }
+  const A=a===1?"":a===-1?"−":Lab.fracHTML(a);
+  $("eq").innerHTML=a===0?"<i>y</i> = 0":`<i>y</i> = <span class="c-red">${A||"1"}</span>·2<sup><i>x</i></sup>`;
+  $("tab").tBodies[0].rows[0].querySelectorAll("td").forEach((td,i)=>td.innerHTML=Lab.fracHTML(a*2**i));
+  $("msg").innerHTML=a===0?"With <i>a</i> = 0 everything is 0: no growth at all."
+    :a<0?`<b>a is negative:</b> the curve is flipped below the <i>x</i>-axis. It still starts at <span class="c-red">(0, ${Lab.fracText(a)})</span> and doubles in size each step (${Lab.fracText(a)}, ${Lab.fracText(2*a)}, ${Lab.fracText(4*a)}, …).`
+    :`Starts at <span class="c-red">(0, ${Lab.fracText(a)})</span>, then doubles: ${Lab.fracText(a)} → ${Lab.fracText(2*a)} → ${Lab.fracText(4*a)} → ${Lab.fracText(8*a)}.`;
+}
+$("ar").oninput=draw; draw();
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"For y = 5·2<sup>x</sup>, where does the graph cross the y-axis?",form:"(0, {a})",check:v=>v.a===5});
+Lab.tryIt(T,{title:"Try it 2",q:"For y = 5·2<sup>x</sup>, what is y when x = 3?",form:"<i>y</i> = {a}",check:v=>v.a===40,explain:"5 · 8 = 40."});
+Lab.tryIt(T,{title:"Try it 3",q:"A bacteria count is modeled by N(t) = 1,200(2)<sup>t</sup>. How many bacteria were there at t = 0?",form:"<i>N</i>(0) = {a}",check:v=>v.a===1200,explain:"The coefficient is the initial value."});
+
+</script>
+</body>
+</html>

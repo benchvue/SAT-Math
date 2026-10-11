@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factored form and zeros · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#quadratic">← Learning path</a><span>Quadratic functions · Step 8 of 9</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>Factored form and zeros</span></h1>
+  <p class="goal"><span>y = a(x − p)(x − q) shows where the parabola crosses the x-axis. Move p and q and watch the zeros, the vertex and the axis of symmetry.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="https://benchvue.github.io/GeoGebra/week04/basic-diagram.html" class="done" title="Step 1: The squaring machine: f(x) = x²" aria-label="Step 1: The squaring machine: f(x) = x²"></a><a href="https://benchvue.github.io/GeoGebra/week04/calculate-square.html" class="done" title="Step 2: Why it is called a square" aria-label="Step 2: Why it is called a square"></a><a href="https://benchvue.github.io/GeoGebra/week04/square-drawing.html" class="done" title="Step 3: Growing squares" aria-label="Step 3: Growing squares"></a><a href="https://benchvue.github.io/GeoGebra/week04/squre-x-y-drawing.html" class="done" title="Step 4: From squares to a parabola" aria-label="Step 4: From squares to a parabola"></a><a href="https://benchvue.github.io/GeoGebra/week04/quadratic-a.html" class="done" title="Step 5: The coefficient a: narrow or wide" aria-label="Step 5: The coefficient a: narrow or wide"></a><a href="https://benchvue.github.io/GeoGebra/week04/quadratic-c.html" class="done" title="Step 6: The constant c: shift up or down" aria-label="Step 6: The constant c: shift up or down"></a><a href="https://benchvue.github.io/GeoGebra/week04/function-quadratic.html" class="done" title="Step 7: Vertex form: m(x − a)² + b" aria-label="Step 7: Vertex form: m(x − a)² + b"></a><a href="../../learning/quadratic/factored-form.html" class="now" title="Step 8: Factored form and zeros" aria-label="Step 8: Factored form and zeros"></a><a href="../../learning/quadratic/find-quadratic.html" class="" title="Step 9: Find the quadratic equation" aria-label="Step 9: Find the quadratic equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div></div>
+  <div class="panel">
+    <div class="eq big" id="eq"></div>
+    <div class="ctrl"><label for="ar"><span><i>a</i> (opens up or down)</span> <output id="av"></output></label><input type="range" id="ar" min="-2" max="2" step="0.5" value="1"></div>
+    <div class="ctrl"><label for="pr"><span class="c-red">zero <i>p</i></span> <output id="pv"></output></label><input type="range" id="pr" min="-6" max="6" step="1" value="-1"></div>
+    <div class="ctrl"><label for="qr"><span class="c-blue">zero <i>q</i></span> <output id="qv"></output></label><input type="range" id="qr" min="-6" max="6" step="1" value="3"></div>
+    <div class="note" id="facts"></div>
+  </div>
+</div>
+<div class="panel"><h2>Three forms of the same parabola</h2>
+  <table class="t"><thead><tr><th>Form</th><th>Equation</th><th>What it shows</th></tr></thead>
+  <tbody>
+    <tr><td>Factored</td><td class="m" id="f1"></td><td>zeros (<i>x</i>-intercepts)</td></tr>
+    <tr><td>Standard</td><td class="m" id="f2"></td><td><i>y</i>-intercept (the constant)</td></tr>
+    <tr><td>Vertex</td><td class="m" id="f3"></td><td>vertex and min / max</td></tr>
+  </tbody></table>
+  <p class="muted">SAT pattern: “(x + 4) is a factor” means x = −4 is a zero. The vertex is halfway between the zeros.</p>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="https://benchvue.github.io/GeoGebra/week04/function-quadratic.html">← Step 7: Vertex form: m(x − a)² + b</a><a class="btn" href="../../learning/quadratic/find-quadratic.html">Step 9: Find the quadratic equation →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const pl=Lab.plane($("plot"),{x:[-8,8],y:[-10,10],xstep:1,ystep:1,xlabel:2,ylabel:2,h:520});
+const axis=pl.seg(0,-10,0,10,{color:Lab.C.green,dash:"6 6",width:2}); const cur=pl.curve(x=>x); const marks=Lab.el("g",{},pl.top);
+const F=Lab.fracHTML;
+function fac(r){return r===0?"<i>x</i>":`(<i>x</i> ${r>0?"−":"+"} ${Math.abs(r)})`;}
+function poly(c2,c1,c0){
+  let s=""; const t=(c,v,first)=>{ if(Lab.near(c,0))return ""; const neg=c<0, ab=Math.abs(c); const coef=(v&&Lab.near(ab,1))?"":F(ab); return (first?(neg?"−":""):(neg?" − ":" + "))+coef+v; };
+  [[c2,"<i>x</i>²"],[c1,"<i>x</i>"],[c0,""]].forEach(([c,v])=>{const x=t(c,v,!s); s+=x;}); return s||"0";
+}
+function draw(){
+  let a=+$("ar").value; if(a===0){a=0.5;$("ar").value=0.5;}
+  const p=+$("pr").value,q=+$("qr").value,h=(p+q)/2,k=a*(h-p)*(h-q);
+  $("av").innerHTML=F(a); $("pv").textContent=Lab.minus(p); $("qv").textContent=Lab.minus(q);
+  pl.setCurve(cur,x=>a*(x-p)*(x-q)); axis.setAttribute("x1",pl.X(h)); axis.setAttribute("x2",pl.X(h));
+  marks.innerHTML="";
+  const A=a===1?"":a===-1?"−":F(a);
+  // zero labels go on the outer side of each zero, on the side of the x-axis the curve is NOT on there
+  const dy=a>0?-12:24, lo=Math.min(p,q);
+  const lab=(x,c)=>pl.dot(x,0,c,`(${Lab.minus(x)}, 0)`,{layer:marks,at:p===q?[0,dy,"middle"]:x===lo?[-8,dy,"end"]:[8,dy,"start"]});
+  if(p===q){ lab(p,Lab.C.red); } else { lab(p,Lab.C.red); lab(q,Lab.C.blue); }
+  if(p!==q) pl.dot(h,k,Lab.C.green,`vertex (${Lab.fracText(h)}, ${Lab.fracText(k)})`,{layer:marks,at:[10,a>0?20:-12,"start"]});
+  const fact=`${A}${fac(p)}${p===q?"²":fac(q)}`;
+  $("eq").innerHTML=`<i>y</i> = ${fact}`;
+  $("f1").innerHTML=`<i>y</i> = ${fact}`;
+  $("f2").innerHTML=`<i>y</i> = ${poly(a,-a*(p+q),a*p*q)}`;
+  const hv=h===0?"<i>x</i>²":`(<i>x</i> ${h>0?"−":"+"} ${F(Math.abs(h))})²`, kv=Lab.near(k,0)?"":` ${k>0?"+":"−"} ${F(Math.abs(k))}`;
+  $("f3").innerHTML=`<i>y</i> = ${A}${hv}${kv}`;
+  $("facts").innerHTML=p===q?`<b>Double zero.</b> Both factors are the same, so the parabola just touches the <i>x</i>-axis at (${Lab.minus(p)}, 0). That point is also the vertex.`
+    :`Zeros: <span class="c-red"><i>x</i> = ${Lab.minus(p)}</span> and <span class="c-blue"><i>x</i> = ${Lab.minus(q)}</span>. Axis of symmetry: <span class="c-green"><i>x</i> = (${Lab.minus(p)} + ${Lab.minus(q)}) ÷ 2 = ${F(h)}</span>. Vertex <i>y</i> = ${F(k)}, a ${a>0?"minimum (a &gt; 0, opens up)":"maximum (a &lt; 0, opens down)"}.`;
+}
+["ar","pr","qr"].forEach(i=>$(i).oninput=draw); draw();
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"y = (x − 2)(x + 4). What is the sum of the zeros?",form:"2 + (−4) = {a}",check:v=>v.a===-2});
+Lab.tryIt(T,{title:"Try it 2",q:"y = (x − 2)(x + 4). What is the x-coordinate of the vertex?",form:"<i>x</i> = {a}",check:v=>v.a===-1,explain:"Halfway between 2 and −4."});
+Lab.tryIt(T,{title:"Try it 3",q:"The graph of a quadratic crosses the x-axis at x = −3 and x = 5. Which factor must it have? Type the number in (x + __).",form:"(<i>x</i> + {a})",check:v=>v.a===3,explain:"A zero at x = −3 comes from the factor (x + 3)."});
+
+</script>
+</body>
+</html>

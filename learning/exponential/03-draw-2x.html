@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draw y = 2x point by point · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 3 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>Draw y = 2<sup>x</sup> point by point</span></h1>
+  <p class="goal"><span>Plot the table one point at a time, including negative x. Then connect the dots and meet the asymptote.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="done" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="done" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="now" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div>
+    <div class="row"><button class="btn" id="next">Plot next point</button><button class="btn ghost" id="all">Plot all</button><button class="btn ghost" id="join">Connect the dots</button><button class="btn ghost" id="reset">Reset</button></div>
+  </div>
+  <div class="panel"><h2>Table</h2>
+    <table class="t" id="tab"><thead><tr><th><i>x</i></th><th>2<sup><i>x</i></sup></th><th><i>y</i></th></tr></thead><tbody></tbody></table>
+    <div class="note" id="msg">Press <b>Plot next point</b> to start at <i>x</i> = −3.</div>
+  </div>
+</div>
+<div class="panel"><h2>Three things every exponential graph y = 2<sup>x</sup> shows</h2>
+  <ul class="points">
+    <li><b>y-intercept (0, 1)</b> because 2<sup>0</sup> = 1.</li>
+    <li><b>Negative x gives fractions:</b> 2<sup>−1</sup> = <span class="fr"><span>1</span><span>2</span></span>, 2<sup>−2</sup> = <span class="fr"><span>1</span><span>4</span></span>. Going left halves the value each step.</li>
+    <li><b>Asymptote y = 0:</b> halving never reaches 0, so the curve gets closer and closer to the <i>x</i>-axis but never touches it.</li>
+  </ul>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/exponential/02-doubling-stack.html">← Step 2: Doubling vs adding</a><a class="btn" href="../../learning/exponential/04-function-race.html">Step 4: Race: 2x vs x² vs 2ˣ →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const xs=[-3,-2,-1,0,1,2,3,4];
+const pl=Lab.plane($("plot"),{x:[-4,5],y:[-1,17],xstep:1,ystep:1,xlabel:1,ylabel:2,h:520});
+let k=0, joined=false;
+const tb=$("tab").tBodies[0];
+tb.innerHTML=xs.map(x=>`<tr><td>${Lab.minus(x)}</td><td>2<sup>${Lab.minus(x)}</sup></td><td class="yv">?</td></tr>`).join("");
+const MSG={"-3":"2<sup>−3</sup> = 1 ÷ 2 ÷ 2 ÷ 2 = <b>1/8</b>. Very small, but still above 0.","-2":"2<sup>−2</sup> = <b>1/4</b>: half of 1/2.","-1":"2<sup>−1</sup> = <b>1/2</b>.","0":"2<sup>0</sup> = <b>1</b>: this is the <i>y</i>-intercept.","1":"2<sup>1</sup> = <b>2</b>.","2":"2<sup>2</sup> = <b>4</b>.","3":"2<sup>3</sup> = <b>8</b>.","4":"2<sup>4</sup> = <b>16</b>. Each step right doubled the height."};
+function render(){
+  pl.clear();
+  if(joined){ pl.curve(x=>2**x,{color:Lab.C.green}); pl.seg(-4,0,5,0,{color:Lab.C.red,dash:"7 6",width:2.5}); pl.label(-2.6,0.9,"asymptote y = 0",Lab.C.red); }
+  xs.slice(0,k).forEach((x,i)=>pl.dot(x,2**x,i===k-1?Lab.C.blue:"#000",i===k-1?`(${Lab.minus(x)}, ${Lab.fracText(2**x)})`:"",{at:x>2?[-10,-8,"end"]:[10,-10,"start"]}));
+  [...tb.rows].forEach((r,i)=>{r.classList.toggle("hl",i===k-1); r.querySelector(".yv").innerHTML=i<k?Lab.fracHTML(2**xs[i]):"?";});
+  $("next").disabled=k>=xs.length;
+}
+$("next").onclick=()=>{ if(k<xs.length){k++; $("msg").innerHTML=MSG[xs[k-1]]; render();} };
+$("all").onclick=()=>{k=xs.length; $("msg").innerHTML="All 8 points are on the plane. Now press <b>Connect the dots</b>."; render();};
+$("join").onclick=()=>{k=xs.length; joined=true; $("msg").innerHTML="The smooth curve is <i>y</i> = 2<sup><i>x</i></sup>. On the left it hugs the <i>x</i>-axis (the asymptote <i>y</i> = 0); on the right it shoots up."; render();};
+$("reset").onclick=()=>{k=0;joined=false;$("msg").innerHTML="Press <b>Plot next point</b> to start at <i>x</i> = −3.";render();};
+render();
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"What is 2<sup>−2</sup>?",form:"2<sup>−2</sup> = {a}",check:v=>Lab.near(v.a,0.25),explain:"1/4, which is 0.25.",hint:"start at 1 and halve twice."});
+Lab.tryIt(T,{title:"Try it 2",q:"Where does y = 2<sup>x</sup> cross the y-axis?",form:"(0, {a})",check:v=>v.a===1,explain:"2<sup>0</sup> = 1."});
+Lab.tryIt(T,{title:"Try it 3",q:"y = 2<sup>x</sup> + 3 is the same curve moved up 3. What is its horizontal asymptote?",form:"<i>y</i> = {a}",check:v=>v.a===3,explain:"Everything shifts up 3, including the asymptote y = 0 → y = 3."});
+
+</script>
+</body>
+</html>

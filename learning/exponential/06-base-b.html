@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The base b: growth or decay · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 6 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>The base b: growth or decay</span></h1>
+  <p class="goal"><span>In y = b<sup>x</sup>, the base is what you multiply by each step. Bigger than 1 grows, between 0 and 1 shrinks.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="done" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="done" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="done" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="done" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="done" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="now" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div></div>
+  <div class="panel">
+    <div class="eq big" id="eq"></div>
+    <div class="ctrl"><label for="br"><span><i>b</i> (base)</span> <output id="bv"></output></label><input type="range" id="br" min="0.2" max="3" step="0.05" value="2"></div>
+    <div class="row" id="chips"></div>
+    <div class="note" id="msg"></div>
+    <table class="t" id="tab"><thead><tr><th><i>x</i></th><th>−2</th><th>−1</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead><tbody><tr><th><i>y</i></th><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+  </div>
+</div>
+<div class="panel"><h2>Read the base like the SAT does</h2>
+  <ul class="points">
+    <li><b>b &gt; 1: growth.</b> Each step multiplies by b, an increase of (b − 1) × 100%. Example: 1.25 means +25% per step.</li>
+    <li><b>0 &lt; b &lt; 1: decay.</b> Each step keeps b of the value, a decrease of (1 − b) × 100%. Example: 0.8 means −20% per step.</li>
+    <li><b>b = 1:</b> nothing changes; the graph is the flat line y = 1.</li>
+    <li>Every curve y = b<sup>x</sup> passes through <span class="c-red">(0, 1)</span>, and the point at x = 1 is <span class="c-blue">(1, b)</span>.</li>
+    <li>(<span class="fr"><span>1</span><span>2</span></span>)<sup>x</sup> is the mirror image of 2<sup>x</sup> across the y-axis.</li>
+  </ul>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/exponential/05-starting-value-a.html">← Step 5: The starting value a</a><a class="btn" href="../../learning/exponential/07-percent-change.html">Step 7: Percent growth and decay →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const pl=Lab.plane($("plot"),{x:[-4,4],y:[-1,12],xstep:1,ystep:1,xlabel:1,ylabel:2,h:500});
+const cur=pl.curve(x=>2**x); const marks=Lab.el("g",{},pl.top);
+[[0.25,"1/4"],[0.5,"1/2"],[1,"1"],[1.5,"1.5"],[2,"2"],[3,"3"]].forEach(([b,t])=>{const c=document.createElement("button");c.className="chip";c.innerHTML="<i>b</i> = "+Lab.fracHTML(b);c.onclick=()=>{$("br").value=b;draw();};$("chips").appendChild(c);});
+function draw(){
+  const b=Lab.round(+$("br").value,2); $("bv").innerHTML=Lab.fracHTML(b);
+  pl.setCurve(cur,x=>b**x); marks.innerHTML="";
+  pl.dot(0,1,Lab.C.red,"(0, 1)",{layer:marks,at:[-10,-10,"end"]}); pl.dot(1,b,Lab.C.blue,`(1, ${Lab.fracText(b)})`,{layer:marks,at:[10,b>1?-10:22,"start"]});
+  $("eq").innerHTML=`<i>y</i> = ${Lab.toFrac(b)&&Lab.toFrac(b)[1]!==1?"("+Lab.fracHTML(b)+")":Lab.fracHTML(b)}<sup><i>x</i></sup>`;
+  $("tab").tBodies[0].rows[0].querySelectorAll("td").forEach((td,i)=>td.innerHTML=Lab.fracHTML(Lab.round(b**(i-2),4)));
+  const pct=Lab.round(Math.abs(b-1)*100,1);
+  $("msg").innerHTML=b>1?`<b>Growth.</b> Each step right multiplies <i>y</i> by ${Lab.fracText(b)}: an increase of <b>${pct}%</b> per step.`
+    :b<1?`<b>Decay.</b> Each step right multiplies <i>y</i> by ${Lab.fracText(b)}: a decrease of <b>${pct}%</b> per step. The curve sinks toward <i>y</i> = 0 but never reaches it.`
+    :"<b>b = 1:</b> 1<sup>x</sup> = 1 for every x, so the graph is flat. Not growth, not decay.";
+}
+$("br").oninput=draw; draw();
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"What is y = (1/2)<sup>x</sup> at x = 3?",form:"<i>y</i> = {a}",check:v=>Lab.near(v.a,0.125),explain:"1/2 × 1/2 × 1/2 = 1/8."});
+Lab.tryIt(T,{title:"Try it 2",q:"y = 400(0.9)<sup>x</sup>. By what percent does y decrease each step?",form:"{a} %",check:v=>Lab.near(v.a,10),explain:"0.9 keeps 90%, so 10% is lost each step."});
+Lab.tryIt(T,{title:"Try it 3",q:"y = 50(1.12)<sup>x</sup>. By what percent does y increase each step?",form:"{a} %",check:v=>Lab.near(v.a,12),explain:"1.12 = 1 + 0.12."});
+
+</script>
+</body>
+</html>

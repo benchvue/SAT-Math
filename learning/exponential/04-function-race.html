@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Race: 2x vs x² vs 2x · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 4 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>Race: 2x vs x² vs 2<sup>x</sup></span></h1>
+  <p class="goal"><span>Three functions start together near the origin. Move x to the right and find out which one wins in the long run.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="done" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="done" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="done" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="now" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div>
+    <div class="ctrl"><label for="xr"><span><i>x</i> =</span> <output id="xv">3</output></label><input type="range" id="xr" min="0" max="8" step="1" value="3"></div>
+    <div class="note" id="lead"></div>
+  </div>
+  <div class="panel"><h2>Scoreboard</h2>
+    <table class="t" id="tab"><thead><tr><th><i>x</i></th><th class="c-blue">2<i>x</i></th><th class="c-red"><i>x</i>²</th><th class="c-green">2<sup><i>x</i></sup></th></tr></thead><tbody></tbody></table>
+    <div class="note"><b>The big idea:</b> 2<sup><i>x</i></sup> and <i>x</i>² tie at <i>x</i> = 2 and <i>x</i> = 4. Between them <i>x</i>² is ahead, but after <i>x</i> = 4 the exponential wins forever. Any growing exponential eventually beats any linear or quadratic function.</div>
+  </div>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/exponential/03-draw-2x.html">← Step 3: Draw y = 2ˣ point by point</a><a class="btn" href="../../learning/exponential/05-starting-value-a.html">Step 5: The starting value a →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const F=[["2x",x=>2*x,Lab.C.blue],["x²",x=>x*x,Lab.C.red],["2ˣ",x=>2**x,Lab.C.green]];
+const pl=Lab.plane($("plot"),{x:[0,8.5],y:[0,80],xstep:1,ystep:5,xlabel:1,ylabel:10,h:480});
+F.forEach(([n,f,c])=>pl.curve(f,{color:c,from:0,to:8.5}));
+pl.label(7.6,17.5,"2x",Lab.C.blue); pl.label(7.2,58,"x²",Lab.C.red,"end"); pl.label(6.15,72,"2ˣ",Lab.C.green,"end");
+const marks=Lab.el("g",{},pl.top);
+const tb=$("tab").tBodies[0];
+tb.innerHTML=[...Array(9).keys()].map(x=>`<tr><td>${x}</td>${F.map(([n,f])=>`<td>${f(x)}</td>`).join("")}</tr>`).join("");
+function draw(){
+  const x=+$("xr").value; $("xv").textContent=x; marks.innerHTML="";
+  Lab.el("line",{x1:pl.X(x),y1:pl.Y(0),x2:pl.X(x),y2:pl.Y(80),stroke:"#000","stroke-dasharray":"5 5","stroke-opacity":.6},marks);
+  F.forEach(([n,f,c])=>{ if(f(x)<=80) Lab.el("circle",{cx:pl.X(x),cy:pl.Y(f(x)),r:6,fill:c,stroke:"#fff","stroke-width":2},marks); });
+  [...tb.rows].forEach((r,i)=>r.classList.toggle("hl",i===x));
+  const v=F.map(([n,f])=>f(x)), mx=Math.max(...v), lead=F.filter((_,i)=>v[i]===mx).map(f=>f[0]);
+  $("lead").innerHTML=`At <i>x</i> = ${x}: 2<i>x</i> = ${v[0]}, <i>x</i>² = ${v[1]}, 2<sup><i>x</i></sup> = ${v[2]}. `+(lead.length>1?`<b>Tie between ${lead.join(" and ")}.</b>`:`<b>${lead[0]} is ahead.</b>`)+(x>=5?" From here on 2<sup>x</sup> stays ahead.":"");
+}
+$("xr").oninput=draw; draw();
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"At x = 6, how much bigger is 2<sup>x</sup> than x²?",form:"64 − 36 = {a}",check:v=>v.a===28});
+Lab.tryIt(T,{title:"Try it 2",q:"What is the smallest whole number x greater than 4 where 2<sup>x</sup> &gt; x²?",form:"<i>x</i> = {a}",check:v=>v.a===5,explain:"2<sup>5</sup> = 32 &gt; 25."});
+Lab.tryIt(T,{title:"Try it 3",q:"At x = 10, what is 2<sup>x</sup>?",form:"2<sup>10</sup> = {a}",check:v=>v.a===1024,explain:"Compare: 10² is only 100 and 2(10) is 20."});
+
+</script>
+</body>
+</html>

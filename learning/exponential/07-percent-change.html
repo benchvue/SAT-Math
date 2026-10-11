@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Percent growth and decay · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+.phrase{font-size:18px;background:#F6F8FB;border-left:4px solid var(--ink);padding:10px 14px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 7 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>Percent growth and decay</span></h1>
+  <p class="goal"><span>Most SAT exponential questions are word problems. Turn the words into a multiplier, then into y = a(1 + r)<sup>t</sup>.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="done" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="done" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="done" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="done" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="done" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="done" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="now" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div></div>
+  <div class="panel">
+    <div class="phrase" id="phrase"></div>
+    <div class="eq big" id="eq"></div>
+    <div class="ctrl"><label for="ar"><span>Starting amount <i>a</i></span> <output id="av"></output></label><input type="range" id="ar" min="100" max="1000" step="50" value="500"></div>
+    <div class="ctrl"><label for="rr"><span>Percent change per year <i>r</i></span> <output id="rv"></output></label><input type="range" id="rr" min="-50" max="50" step="1" value="6"></div>
+    <table class="t" id="tab"><thead><tr><th>Year <i>t</i></th><th>Value</th></tr></thead><tbody></tbody></table>
+  </div>
+</div>
+<div class="panel"><h2>From words to the multiplier</h2>
+  <table class="t">
+    <thead><tr><th>The SAT says…</th><th>Multiplier (1 + r)</th></tr></thead>
+    <tbody>
+      <tr><td>increases by 6% each year</td><td>1.06</td></tr>
+      <tr><td>decreases by 20% each year</td><td>0.80</td></tr>
+      <tr><td>doubles every year</td><td>2</td></tr>
+      <tr><td>is halved every year</td><td>0.5</td></tr>
+      <tr><td>increases by 3% every month, <i>t</i> in years</td><td>1.03<sup>12<i>t</i></sup></td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Careful: “increases <u>by</u> 6%” gives 1.06, not 0.06 and not 6.</p>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/exponential/06-base-b.html">← Step 6: The base b: growth or decay</a><a class="btn" href="../../learning/exponential/08-find-exponential.html">Step 8: Find the exponential equation →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+let pl=null;
+function nice(m){const raw=m/8, p=10**Math.floor(Math.log10(raw)), f=raw/p; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;}
+function draw(){
+  const a=+$("ar").value, r=+$("rr").value/100, b=1+r;
+  $("av").textContent="$"+a.toLocaleString("en-US"); $("rv").textContent=(r>0?"+":r<0?"−":"")+Math.abs(Math.round(r*100))+"%";
+  const vals=[...Array(11).keys()].map(t=>a*b**t), M=Math.max(...vals,a)*1.08, st=nice(M);
+  $("plot").innerHTML=""; pl=Lab.plane($("plot"),{x:[0,10],y:[0,Math.ceil(M/st)*st],xstep:1,ystep:st,xlabel:1,ylabel:st*2,h:460,pad:44,xname:"t",yname:"y"});
+  pl.curve(t=>a*b**t,{from:0,to:10});
+  vals.forEach((v,t)=>pl.dot(t,v,t===0?Lab.C.red:Lab.C.green,"",{r:4.5}));
+  pl.label(0.15,a,"",Lab.C.red);
+  const word=r>0?`increases by ${Math.round(r*100)}% each year`:r<0?`decreases by ${Math.round(-r*100)}% each year`:"does not change";
+  $("phrase").innerHTML=`“A value of $${a.toLocaleString("en-US")} <b>${word}</b>.”`;
+  const bs=Lab.round(b,2).toFixed(2).replace(/0$/,"");
+  $("eq").innerHTML=`<i>y</i> = <span class="c-red">${a.toLocaleString("en-US")}</span>(<span class="c-green">${bs}</span>)<sup><i>t</i></sup>`;
+  $("tab").tBodies[0].innerHTML=[0,1,2,3,5,10].map(t=>`<tr><td>${t}</td><td>$${(a*b**t).toLocaleString("en-US",{maximumFractionDigits:2,minimumFractionDigits:2})}</td></tr>`).join("");
+}
+$("ar").oninput=draw; $("rr").oninput=draw; draw();
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"A town of 800 people grows by 5% per year. What is the yearly multiplier?",form:"<i>y</i> = 800({a})<sup><i>t</i></sup>",check:v=>Lab.near(v.a,1.05)});
+Lab.tryIt(T,{title:"Try it 2",q:"A $20,000 car loses 15% of its value each year. What is the yearly multiplier?",form:"<i>y</i> = 20,000({a})<sup><i>t</i></sup>",check:v=>Lab.near(v.a,0.85),explain:"Keep 85% each year."});
+Lab.tryIt(T,{title:"Try it 3",q:"y = 300(0.92)<sup>t</sup>. By what percent does the value decrease each year?",form:"{a} %",check:v=>Lab.near(v.a,8)});
+Lab.tryIt(T,{title:"Try it 4",q:"$1,000 grows by 10% per year. What is it worth after 2 years?",form:"$ {a}",check:v=>Lab.near(v.a,1210,0.01),explain:"1,000 × 1.1 × 1.1 = 1,210. Not 1,200: the second 10% is taken on 1,100."});
+
+</script>
+</body>
+</html>

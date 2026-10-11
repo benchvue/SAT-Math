@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find the quadratic equation · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+ol.disc{margin:0;padding-left:22px;display:grid;gap:8px}
+ol.disc li{color:var(--muted)}
+ol.disc li.open{color:var(--ink)}
+ol.disc li div{margin-top:2px}
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#quadratic">← Learning path</a><span>Quadratic functions · Step 9 of 9</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>Find the quadratic equation</span></h1>
+  <p class="goal"><span>A mystery parabola appears. Read its vertex and one more point, solve for a, and write y = a(x − h)² + k.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="https://benchvue.github.io/GeoGebra/week04/basic-diagram.html" class="done" title="Step 1: The squaring machine: f(x) = x²" aria-label="Step 1: The squaring machine: f(x) = x²"></a><a href="https://benchvue.github.io/GeoGebra/week04/calculate-square.html" class="done" title="Step 2: Why it is called a square" aria-label="Step 2: Why it is called a square"></a><a href="https://benchvue.github.io/GeoGebra/week04/square-drawing.html" class="done" title="Step 3: Growing squares" aria-label="Step 3: Growing squares"></a><a href="https://benchvue.github.io/GeoGebra/week04/squre-x-y-drawing.html" class="done" title="Step 4: From squares to a parabola" aria-label="Step 4: From squares to a parabola"></a><a href="https://benchvue.github.io/GeoGebra/week04/quadratic-a.html" class="done" title="Step 5: The coefficient a: narrow or wide" aria-label="Step 5: The coefficient a: narrow or wide"></a><a href="https://benchvue.github.io/GeoGebra/week04/quadratic-c.html" class="done" title="Step 6: The constant c: shift up or down" aria-label="Step 6: The constant c: shift up or down"></a><a href="https://benchvue.github.io/GeoGebra/week04/function-quadratic.html" class="done" title="Step 7: Vertex form: m(x − a)² + b" aria-label="Step 7: Vertex form: m(x − a)² + b"></a><a href="../../learning/quadratic/factored-form.html" class="done" title="Step 8: Factored form and zeros" aria-label="Step 8: Factored form and zeros"></a><a href="../../learning/quadratic/find-quadratic.html" class="now" title="Step 9: Find the quadratic equation" aria-label="Step 9: Find the quadratic equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div>
+    <div class="row"><button class="btn ghost" id="new">New graph</button><button class="btn" id="stepBtn">Show next step</button></div>
+  </div>
+  <div class="panel"><h2>Discovery steps</h2><ol class="disc" id="steps"></ol></div>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/quadratic/factored-form.html">← Step 8: Factored form and zeros</a><span class="row" style="margin:0"><a class="btn ghost" href="../../index.html#graph-quizzes">Graph quiz</a><a class="btn" href="../../index.html#topic-7">Practice SAT questions: Quadratic functions & graphs →</a></span></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const pl=Lab.plane($("plot"),{x:[-8,8],y:[-8,8],xstep:1,ystep:1,xlabel:2,ylabel:2,h:520});
+let h=1,k=2,a=1,shown=0;
+function pick(){
+  const As=[1,-1,2,-2,0.5,-0.5];
+  for(;;){ a=As[Math.floor(Math.random()*As.length)]; h=Math.floor(Math.random()*9)-4; k=Math.floor(Math.random()*11)-5;
+    const d=Math.abs(a)===0.5?2:1, y2=k+a*d*d; if(y2>=-7&&y2<=7&&h+d<=7) return; }
+}
+function B(){const d=Math.abs(a)===0.5?2:1; return {x:h+d,y:k+a*d*d,d};}
+const F=Lab.fracHTML, T=Lab.fracText;
+function vf(){const A=a===1?"":a===-1?"−":F(a); const hx=h===0?"<i>x</i>":`(<i>x</i> ${h>0?"−":"+"} ${Math.abs(h)})`; return `<i>y</i> = ${A}${hx}²${k===0?"":` ${k>0?"+":"−"} ${Math.abs(k)}`}`;}
+function stepsHTML(){
+  const b=B();
+  return [
+    ["Look at the curve",`A U-shape: a parabola that opens ${a>0?"up (a &gt; 0)":"down (a &lt; 0)"}.`],
+    ["Read the vertex",`The ${a>0?"lowest":"highest"} point is <span class="c-red">A(${Lab.minus(h)}, ${Lab.minus(k)})</span>, so <i>h</i> = ${Lab.minus(h)} and <i>k</i> = ${Lab.minus(k)}: <i>y</i> = <i>a</i>(<i>x</i> − ${h<0?"("+Lab.minus(h)+")":h})² + ${k<0?"("+Lab.minus(k)+")":k}.`],
+    ["Read another point",`The parabola also passes through <span class="c-blue">B(${Lab.minus(b.x)}, ${T(b.y)})</span>.`],
+    ["Solve for a",`${T(b.y)} = <i>a</i>(${Lab.minus(b.x)} − ${h<0?"("+Lab.minus(h)+")":h})² + ${k<0?"("+Lab.minus(k)+")":k} → ${T(b.y-k)} = <i>a</i>·${b.d*b.d} → <b><i>a</i> = ${F(a)}</b>.`],
+    ["Write the equation",`<span class="eq">${vf()}</span>`],
+  ];
+}
+function draw(){
+  pl.clear(); pl.curve(x=>a*(x-h)**2+k); const b=B();
+  if(shown>=2) pl.dot(h,k,Lab.C.red,`A(${Lab.minus(h)}, ${Lab.minus(k)})`,{at:[-10,a>0?22:-12,"end"]}); else pl.dot(h,k,"#000");
+  if(shown>=3) pl.dot(b.x,b.y,Lab.C.blue,`B(${Lab.minus(b.x)}, ${T(b.y)})`,{at:[12,a>0?14:-8,"start"]}); else pl.dot(b.x,b.y,"#000");
+  $("steps").innerHTML=stepsHTML().map(([t,d],i)=>`<li class="${i<shown?"open":""}"><b>${t}</b>${i<shown?`<div>${d}</div>`:""}</li>`).join("");
+  $("stepBtn").disabled=shown>=5;
+}
+$("stepBtn").onclick=()=>{shown=Math.min(5,shown+1);draw();};
+$("new").onclick=()=>{const o=[a,h,k];do{pick();}while(o[0]===a&&o[1]===h&&o[2]===k);shown=0;draw();t.reset();};
+draw();
+const t=Lab.tryIt($("tries"),{title:"Your answer",q:"Write the equation of the green parabola. Use negatives and fractions as needed.",form:"<i>y</i> = {a}(<i>x</i> − {h})² + {k}",check:v=>Lab.near(v.a,a)&&Lab.near(v.h,h)&&Lab.near(v.k,k),hint:"the vertex gives h and k; put the other point in to solve for a."});
+
+</script>
+</body>
+</html>

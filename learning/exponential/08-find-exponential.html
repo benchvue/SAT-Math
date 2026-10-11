@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find the exponential equation · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+ol.disc{margin:0;padding-left:22px;display:grid;gap:8px}
+ol.disc li{color:var(--muted)}
+ol.disc li.open{color:var(--ink)}
+ol.disc li div{margin-top:2px}
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 8 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>Find the exponential equation</span></h1>
+  <p class="goal"><span>A mystery curve y = a·b<sup>x</sup> appears. Read two points, find a and b, and write the equation.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="done" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="done" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="done" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="done" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="done" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="done" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="done" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="now" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel"><div id="plot"></div>
+    <div class="row"><button class="btn ghost" id="new">New graph</button><button class="btn" id="stepBtn">Show next step</button></div>
+  </div>
+  <div class="panel"><h2>Discovery steps</h2>
+    <ol class="disc" id="steps"></ol>
+  </div>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning/exponential/07-percent-change.html">← Step 7: Percent growth and decay</a><span class="row" style="margin:0"><a class="btn ghost" href="../../index.html#graph-quizzes">Graph quiz</a><a class="btn" href="../../index.html#topic-8">Practice SAT questions: Exponential functions & growth →</a></span></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const POOL=[[1,2],[2,2],[3,2],[4,2],[1,3],[2,3],[16,0.5],[8,0.5],[12,0.5],[9,1/3],[4,1.5],[1,4]];
+let a=3,b=2,shown=0,pi=2;
+const pl=Lab.plane($("plot"),{x:[-3,4],y:[-1,20],xstep:1,ystep:1,xlabel:1,ylabel:2,h:540});
+function stepsHTML(){
+  const f1=a*b;
+  return [
+    ["Look at the curve","It is smooth, never touches the <i>x</i>-axis and changes faster and faster (or slower and slower): exponential."],
+    ["Read the y-intercept",`The curve crosses the <i>y</i>-axis at <span class="c-red">A(0, ${Lab.fracText(a)})</span>. At <i>x</i> = 0, <i>b</i><sup>0</sup> = 1, so <b><i>a</i> = ${Lab.fracText(a)}</b>.`],
+    ["Read the point at x = 1",`The curve passes through <span class="c-blue">B(1, ${Lab.fracText(f1)})</span>.`],
+    ["Divide to get b",`<i>b</i> = <i>y</i>(1) ÷ <i>y</i>(0) = ${Lab.fracText(f1)} ÷ ${Lab.fracText(a)} = <b>${Lab.fracHTML(b)}</b>. ${b>1?"b &gt; 1: growth.":"0 &lt; b &lt; 1: decay."}`],
+    ["Write the equation",`<span class="eq"><i>y</i> = ${a===1?"":Lab.fracText(a)}(${Lab.fracHTML(b)})<sup><i>x</i></sup></span>. Check: at <i>x</i> = 2, <i>y</i> = ${Lab.fracText(a*b*b)}.`],
+  ];
+}
+function draw(){
+  pl.clear(); pl.curve(x=>a*b**x);
+  if(shown>=2) pl.dot(0,a,Lab.C.red,`A(0, ${Lab.fracText(a)})`,{at:[-10,-10,"end"]}); else pl.dot(0,a,"#000");
+  if(shown>=3) pl.dot(1,a*b,Lab.C.blue,`B(1, ${Lab.fracText(a*b)})`,{at:[12,b>1?18:-12,"start"]}); else pl.dot(1,a*b,"#000");
+  $("steps").innerHTML=stepsHTML().map(([h,t],i)=>`<li class="${i<shown?"open":""}"><b>${h}</b>${i<shown?`<div>${t}</div>`:""}</li>`).join("");
+  $("stepBtn").disabled=shown>=5;
+}
+$("stepBtn").onclick=()=>{shown=Math.min(5,shown+1);draw();};
+$("new").onclick=()=>{let k;do{k=Math.floor(Math.random()*POOL.length);}while(k===pi);pi=k;[a,b]=POOL[k];shown=0;draw();t.reset();};
+draw();
+const t=Lab.tryIt($("tries"),{title:"Your answer",q:"Write the equation of the green curve before you open all the steps.",form:"<i>y</i> = {a}({b})<sup><i>x</i></sup>",check:v=>Lab.near(v.a,a)&&Lab.near(v.b,b,1e-4),hint:"a is the y-intercept; b = (y at x = 1) ÷ (y at x = 0)."});
+
+</script>
+</body>
+</html>

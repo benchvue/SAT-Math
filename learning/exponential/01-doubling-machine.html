@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The doubling machine: y = 2x · SAT Math Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../learning/lab.css">
+<style>
+
+.machine{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:8px 0 14px}
+.bubble{width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;transition:transform .25s}
+.bubble small{font-size:12px;opacity:.9}
+.bubble b{font-family:var(--math);font-size:28px;line-height:1.1}
+.bubble.in{background:var(--green)}.bubble.out{background:var(--blue)}
+.bubble.lit{transform:scale(1.1)}
+.pipe{font-size:26px;font-weight:700}
+.box{border:3px solid var(--ink);border-radius:12px;min-width:200px;max-width:260px;overflow:hidden;text-align:center}
+.box .fx{background:var(--red);color:#fff;font-family:var(--math);font-size:22px;padding:6px 10px}
+.box .work{padding:12px 10px;font-family:var(--math);font-size:19px;min-height:54px}
+
+</style>
+</head>
+<body>
+<header class="lab-top"><div class="lab-wrap">
+  <nav class="crumbs"><a href="../../learning.html#exponential">← Learning path</a><span>Exponential functions · Step 1 of 8</span><a href="../../index.html">SAT practice</a></nav>
+  <h1><span>The doubling machine: y = 2<sup>x</sup></span></h1>
+  <p class="goal"><span>An exponential function multiplies. Put x into the machine and it multiplies 2 by itself x times.</span></p>
+  <nav class="steps-dots" aria-label="Steps in this group"><a href="../../learning/exponential/01-doubling-machine.html" class="now" title="Step 1: The doubling machine: y = 2ˣ" aria-label="Step 1: The doubling machine: y = 2ˣ"></a><a href="../../learning/exponential/02-doubling-stack.html" class="" title="Step 2: Doubling vs adding" aria-label="Step 2: Doubling vs adding"></a><a href="../../learning/exponential/03-draw-2x.html" class="" title="Step 3: Draw y = 2ˣ point by point" aria-label="Step 3: Draw y = 2ˣ point by point"></a><a href="../../learning/exponential/04-function-race.html" class="" title="Step 4: Race: 2x vs x² vs 2ˣ" aria-label="Step 4: Race: 2x vs x² vs 2ˣ"></a><a href="../../learning/exponential/05-starting-value-a.html" class="" title="Step 5: The starting value a" aria-label="Step 5: The starting value a"></a><a href="../../learning/exponential/06-base-b.html" class="" title="Step 6: The base b: growth or decay" aria-label="Step 6: The base b: growth or decay"></a><a href="../../learning/exponential/07-percent-change.html" class="" title="Step 7: Percent growth and decay" aria-label="Step 7: Percent growth and decay"></a><a href="../../learning/exponential/08-find-exponential.html" class="" title="Step 8: Find the exponential equation" aria-label="Step 8: Find the exponential equation"></a></nav>
+</div></header>
+<main class="lab-wrap">
+
+<div class="cols">
+  <div class="panel">
+    <h2>The machine</h2>
+    <div class="machine">
+      <div class="bubble in"><small>Input x</small><b id="mIn">?</b></div>
+      <div class="pipe">→</div>
+      <div class="box"><div class="fx">f(<i>x</i>) = 2<sup><i>x</i></sup></div><div class="work" id="mWork">Press Play</div></div>
+      <div class="pipe">→</div>
+      <div class="bubble out"><small>Output y</small><b id="mOut">?</b></div>
+    </div>
+    <div class="row"><button class="btn" id="play">Play</button><button class="btn ghost" id="next">Next x</button><button class="btn ghost" id="reset">Reset</button></div>
+    <div class="ctrl"><label for="xr">Or pick any x <output id="xv">3</output></label><input type="range" id="xr" min="0" max="10" value="3"></div>
+  </div>
+  <div class="panel">
+    <h2>What came out</h2>
+    <table class="t" id="tab"><thead><tr><th><i>x</i></th><th>Work</th><th><i>y</i> = 2<sup><i>x</i></sup></th></tr></thead><tbody></tbody></table>
+    <div class="note"><b>The pattern:</b> each time <i>x</i> goes up by 1, the output is <b>multiplied by 2</b>. A linear function adds the same amount each step; an exponential function multiplies by the same amount.</div>
+    <div class="note"><b>Why is 2<sup>0</sup> = 1?</b> Going down one step divides by 2: 2<sup>2</sup> = 4, 2<sup>1</sup> = 2, so 2<sup>0</sup> = 2 ÷ 2 = 1.</div>
+  </div>
+</div>
+<div id="tries"></div>
+
+</main>
+<footer class="lab-wrap lab-foot"><a class="btn ghost" href="../../learning.html#exponential">← Learning path</a><a class="btn" href="../../learning/exponential/02-doubling-stack.html">Step 2: Doubling vs adding →</a></footer>
+<script src="../../learning/lab.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const rows=new Map(); let x=0, timer=null;
+function work(x){ if(x===0) return "no 2s multiplied → 1"; if(x<=6) return Array(x).fill("2").join(" × ")+" = "+2**x; return "2 × 2 × … × 2 ("+x+" twos) = "+(2**x).toLocaleString("en-US"); }
+function show(v){
+  $("mIn").textContent=v; $("mIn").parentElement.classList.add("lit");
+  $("mWork").textContent="…"; $("mOut").textContent="?";
+  setTimeout(()=>{$("mWork").textContent=work(v);},Lab.reduced()?0:450);
+  setTimeout(()=>{$("mOut").textContent=(2**v).toLocaleString("en-US");$("mOut").parentElement.classList.add("lit");addRow(v);},Lab.reduced()?0:950);
+  setTimeout(()=>document.querySelectorAll(".bubble").forEach(b=>b.classList.remove("lit")),1300);
+}
+function addRow(v){
+  if(!rows.has(v)){ const tr=document.createElement("tr"); tr.innerHTML=`<td>${v}</td><td>${v===0?"—":v<=6?Array(v).fill("2").join("×"):"2×…×2"}</td><td>${(2**v).toLocaleString("en-US")}</td>`; rows.set(v,tr);
+    const tb=$("tab").tBodies[0]; const after=[...rows.keys()].filter(k=>k>v).sort((a,b)=>a-b)[0]; tb.insertBefore(tr,after!==undefined?rows.get(after):null); }
+  rows.forEach((tr,k)=>tr.classList.toggle("hl",k===v));
+}
+function stop(){clearInterval(timer);timer=null;$("play").textContent="Play";}
+$("play").onclick=()=>{ if(timer) return stop(); $("play").textContent="Pause"; if(x>6) x=0; show(x); x++; timer=setInterval(()=>{ if(x>6) return stop(); show(x); x++; },1500); };
+$("next").onclick=()=>{stop(); if(x>10)x=0; show(x); $("xr").value=x; $("xv").textContent=x; x++;};
+$("reset").onclick=()=>{stop(); x=0; rows.clear(); $("tab").tBodies[0].innerHTML=""; $("mIn").textContent="?"; $("mOut").textContent="?"; $("mWork").textContent="Press Play";};
+$("xr").oninput=e=>{stop(); const v=+e.target.value; $("xv").textContent=v; show(v); x=v+1;};
+const T=$("tries");
+Lab.tryIt(T,{title:"Try it 1",q:"What does the machine output for x = 5?",form:"2<sup>5</sup> = {a}",check:v=>v.a===32,explain:"2 × 2 × 2 × 2 × 2 = 32.",hint:"multiply five 2s together."});
+Lab.tryIt(T,{title:"Try it 2",q:"The output was 64. What was the input?",form:"2<sup><i>x</i></sup> = 64, so <i>x</i> = {a}",check:v=>v.a===6,explain:"Keep doubling from 1: 2, 4, 8, 16, 32, 64 is six doublings.",hint:"count the doublings from 1 up to 64."});
+Lab.tryIt(T,{title:"Try it 3",q:"Going from x = 7 to x = 8, the output is multiplied by what?",form:"multiplied by {a}",check:v=>v.a===2,explain:"Every step right multiplies by the base, 2."});
+
+</script>
+</body>
+</html>
