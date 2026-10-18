@@ -174,11 +174,112 @@ table.sct tbody tr{cursor:pointer}
 .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.78em;line-height:1.05;margin:0 2px}
 .fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 2px}
 .c-red{color:#D02B20;font-weight:700}.c-green{color:#138A3E;font-weight:700}.c-blue{color:#1F4FD1;font-weight:700}
+/* account bar */
+.topbar{display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;min-height:40px;margin-bottom:14px}
+#acct{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:5px 8px 5px 14px;font-size:15px}
+#acct .who{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+#acct .who i,.sw{display:inline-block;width:12px;height:12px;border-radius:50%}
+#acct .goal{font-weight:700;color:var(--ok)}
+#acct .sync,.muted-s{color:var(--muted);font-size:14px}
+.linkbtn{background:none;border:none;color:var(--accent);font-weight:700;cursor:pointer;padding:4px 6px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);z-index:9}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+/* review banner + topic mini bars */
+.review{margin:24px 0 0;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;border:2px solid var(--ink);border-radius:12px;padding:14px 18px}
+.review div{flex:1 1 320px}
+.cat .mini{display:flex;gap:2px;height:6px;background:var(--grid);border-radius:3px;overflow:hidden;margin-top:6px}
+.cat .mini i{display:block;height:100%}
+.cat .mini i.ok{background:var(--ok)}.cat .mini i.tr{background:#E06A00}
+/* attempts on a question */
+.qhead{display:flex;justify-content:flex-end;margin:-6px 0 10px}
+.tries{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
+.tries .dot{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;box-shadow:0 0 0 2px #fff,0 0 0 3px currentColor}
+.tries .dot.ok{background:#17784A;color:#17784A}.tries .dot.ok{color:#fff;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #17784A}
+.tries .dot.no{background:#E06A00;color:#fff;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #E06A00}
+.tries .more{font-weight:700;color:var(--muted)}
+.tries-sum{color:var(--muted);margin-left:4px}
+.tries-none{color:var(--muted)}
+.again{margin-top:14px}
+.qnav{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0 0}
+.qd{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);padding:0;cursor:pointer}
+.qd.first{background:#17784A;border-color:#17784A}
+.qd.fixed{background:#8CC9A6;border-color:#17784A}
+.qd.wrong{background:#E06A00;border-color:#E06A00}
+.qd.cur{outline:2.5px solid var(--ink);outline-offset:2px}
+.qnav-key{font-size:13px;color:var(--muted);margin-top:6px;display:flex;gap:12px;flex-wrap:wrap}
+.qnav-key i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+/* progress section */
+.pg{border-top:2px solid var(--ink);margin-top:40px;padding-top:26px}
+.pg-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.pg-head h2{font-family:var(--head);font-weight:700;font-size:clamp(26px,4vw,34px);margin:0}
+.pg-upd{color:var(--muted);font-size:14px}
+.pg-head .btn{margin-left:auto;padding:6px 14px;font-size:15px}
+.pg-intro{color:var(--muted);max-width:72ch;margin:8px 0 16px}
+.note-box{background:#FFF6E5;border:1.5px solid #E8C27A;border-radius:10px;padding:10px 14px;margin:0 0 16px;font-size:15px}
+.pg-lines p{margin:4px 0;font-size:16px;line-height:1.5}
+.pg-lines .sw{margin-right:6px;vertical-align:-1px}
+.pg-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:16px;margin:18px 0 6px}
+.pc{border:1.5px solid var(--line);border-top:5px solid var(--c);border-radius:12px;padding:14px 18px}
+.pc h3{font-family:var(--head);font-size:22px;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.pc h3 .sw{background:var(--c)}
+.pc dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin:0}
+.pc dl .wide{grid-column:1/-1}
+.pc dt{font-size:13px;color:var(--muted)}
+.pc dd{margin:0;font-weight:700;font-size:17px}
+.pc dd small{font-weight:400;color:var(--muted);font-size:13px}
+.pc dd a{color:var(--ink)}
+.pg-block{margin-top:28px}
+.pg-bh{display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap}
+.pg-bh h3{font-family:var(--head);font-weight:700;font-size:21px;margin:0}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:9px;overflow:hidden}
+.seg button{border:none;background:var(--paper);padding:6px 12px;cursor:pointer;font-weight:700;font-size:14px}
+.seg button+button{border-left:1.5px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.lg{display:flex;gap:14px;font-size:14px;color:var(--ink)}
+.lg i,.tip i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.chartwrap{position:relative;margin-top:10px}
+svg.act{width:100%;height:auto;display:block}
+svg.act .ax{font-size:13px;fill:#5B6578;font-family:var(--body)}
+svg.act .hit{cursor:default;outline:none}
+svg.act .hit.on,svg.act .hit:focus{fill:rgba(31,79,209,.06)}
+.tip{position:absolute;width:220px;background:var(--paper);border:1.5px solid var(--ink);border-radius:9px;padding:8px 10px;font-size:14px;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.tip div{margin-top:3px}.tip small{color:var(--muted)}
+.tip i{width:12px;height:3px;border-radius:2px;vertical-align:4px}
+details.tbl{margin-top:8px;font-size:15px}
+details.tbl summary{cursor:pointer;color:var(--accent);font-weight:700}
+details.tbl table{margin-top:8px;max-width:640px}
+.pg-key{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pg-key i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-left:8px}
+.k-ok{background:#566273}.k-tr{background:#C3CAD5}.k-no{background:var(--grid);border:1px solid var(--line)}
+.pg-sub{color:var(--muted);margin:6px 0 10px;font-size:15px}
+.pd{border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+.pd-h{display:flex;align-items:baseline;gap:10px}
+.pd details summary{cursor:pointer;color:var(--accent);font-weight:700;font-size:14px;margin-top:6px;list-style:none;display:inline-flex;gap:6px}
+.pd details summary::-webkit-details-marker{display:none}
+.pd details summary::before{content:"▸";transition:transform .15s}
+.pd details[open] summary::before{transform:rotate(90deg)}
+.pd-name{font-family:var(--head);font-weight:700;font-size:19px}
+.pd-total{color:var(--muted);font-size:14px}
+.pd-rows{margin-top:8px}
+.pd-topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:12px 24px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.pt a{font-weight:700;color:var(--ink);font-size:15px}
+.br{display:grid;grid-template-columns:62px minmax(0,1fr) 92px;align-items:center;gap:10px;margin:6px 0}
+.br-who{font-weight:700;font-size:14px}
+.br-track{display:flex;gap:2px;height:14px;background:var(--grid);border-radius:4px;overflow:hidden}
+.br-track i{display:block;height:100%}
+.br-track i.ok{background:var(--c)}
+.br-track i.tr{background:var(--c);opacity:.32}
+.br-num{font-variant-numeric:tabular-nums;font-size:14px;font-weight:700;text-align:right}
+.br-num small{font-weight:400;color:var(--muted)}
+.br.sm{grid-template-columns:62px minmax(0,1fr) 84px;margin:3px 0}
+.br.sm .br-track{height:9px}
+@media (max-width:560px){.br,.br.sm{grid-template-columns:52px minmax(0,1fr) 76px}.pc{padding:12px 14px}}
 </style>
 </head>
 <body>
 <div id="home">
   <header class="top"><div class="wrap">
+    <div class="topbar"><div id="acct" aria-live="polite"></div></div>
     <h1>SAT Math practice, one topic at a time</h1><br>
     <p class="lede">Pick one of the 24 topics. Every question appears exactly as printed in Bluebook practice tests 4 through 11, one per page, with instant checking and a short explanation.</p>
     <nav class="tabs" aria-label="Sections"><button data-tab="topics" aria-selected="true">Practice by topic</button><button data-tab="gq" aria-selected="false">Graph quizzes</button><button data-tab="score" aria-selected="false">Math score table</button><a class="tablink" href="learning.html">Learning path →</a></nav>
@@ -259,6 +360,30 @@ table.sct tbody tr{cursor:pointer}
   </div>
   <p class="sc-note">Source: College Board practice test scoring guide (Raw Score Conversion Table, Math section). Each official practice test has its own conversion table, so treat this as an estimate for any one test.</p>
 </section>
+<section class="wrap pg" id="progress" aria-labelledby="pgTitle">
+  <div class="pg-head"><h2 id="pgTitle">Progress</h2><span class="pg-upd" id="pgUpdated"></span><button class="btn ghost" id="pgRefresh">Refresh</button></div>
+  <p class="pg-intro">How Moses and Isaac are doing. Anyone can see this section without signing in. A question counts as <b>tried</b> once it has been answered, and as <b>✓</b> once it has been answered correctly.</p>
+  <div class="note-box" id="pgStatus" hidden></div>
+  <div id="pgBody">
+    <div class="pg-lines" id="pgLines"></div>
+    <div class="pg-cards" id="pgCards"></div>
+    <div class="pg-block">
+      <div class="pg-bh"><h3>Questions answered</h3>
+        <div class="seg" id="pgRange" role="group" aria-label="Time range"><button data-r="7d">7 days</button><button data-r="4w">4 weeks</button><button data-r="12m">12 months</button></div>
+        <div class="lg">
+          <span><i style="background:#1F4FD1"></i>Moses</span><span><i style="background:#D02B20"></i>Isaac</span>
+        </div>
+      </div>
+      <div class="chartwrap"><div id="pgChart"></div><div class="tip" id="pgTip" hidden></div></div>
+      <details class="tbl"><summary>Show as a table</summary><div id="pgTable"></div></details>
+    </div>
+    <div class="pg-block">
+      <div class="pg-bh"><h3>Progress by domain</h3><span class="pg-key"><i class="k-ok"></i>answered correctly <i class="k-tr"></i>tried, not right yet <i class="k-no"></i>not tried</span></div>
+      <p class="pg-sub">Open a domain to see each of its topics. Click a topic to practice it.</p>
+      <div id="pgDomains"></div>
+    </div>
+  </div>
+</section>
 
   <footer class="wrap">432 questions from 8 practice tests. Tip: use the ← and → keys to move between questions.</footer>
 </div>
@@ -269,6 +394,8 @@ table.sct tbody tr{cursor:pointer}
   </div>
   <div class="progress"><i id="prog"></i></div>
   <div class="meta"><span id="count"></span><span id="src"></span></div>
+  <div class="qnav" id="qnav" aria-label="Questions in this list"></div>
+  <div class="qnav-key"><span><i style="background:#17784A"></i>right on 1st try</span><span><i style="background:#8CC9A6;border:1.5px solid #17784A"></i>right after retry</span><span><i style="background:#E06A00"></i>not right yet</span><span><i style="border:1.5px solid #CBD5E3"></i>not tried</span></div>
   <div class="card" id="card"></div>
   <div class="nav">
     <button class="btn ghost" id="prevBtn">Previous</button>
@@ -299,90 +426,447 @@ const QS = Object.entries(DATA).map(([k,v])=>{const m=k.match(/T(\d+)-M(\d)-Q(\d
   return {k,...v,t:+m[1],m:+m[2],n:+m[3],s:`Test ${m[1]} · Module ${m[2]} · Question ${m[3]}`};})
   .sort((a,b)=>a.t-b.t||a.m-b.m||a.n-b.n);
 const $ = id => document.getElementById(id);
-let list=[], idx=0;
-const answered={};
-const COLORS=["#1F4FD1","#7A9BEE","#17784A","#D0A21A"];
-function renderHome(){
-  const m=$("domains"); m.innerHTML="";
-  const total=QS.length;
-  const counts=DOMAINS.map(d=>QS.filter(q=>d.cats.includes(q.c)).length);
-  const pct=n=>(n/total*100).toFixed(1)+"%";
-  const sum=document.createElement("section"); sum.className="summary";
-  sum.innerHTML=`<h2>Question breakdown</h2><div><span class="total">${total}</span> questions in total</div>
-    <div class="split">${counts.map((n,i)=>`<i style="width:${n/total*100}%;background:${COLORS[i]}" title="${DOMAINS[i].name}: ${pct(n)}"></i>`).join("")}</div>
-    <div class="legend">${DOMAINS.map((d,i)=>`<div><span class="sw" style="background:${COLORS[i]}"></span>${d.name}<b>${counts[i]} · ${pct(counts[i])}</b></div>`).join("")}</div>`;
+
+/* ================= Settings: who can sign in, and where records are saved ================= */
+const SYNC = {
+  clientId: "1075824030904-5ehdg01idafeap3n6ij28oouf9mbkisf.apps.googleusercontent.com",
+  // Paste the Apps Script web app URL here after following the setup in README.md (ends in /exec).
+  apiUrl: "https://script.google.com/macros/s/AKfycbwsZ49hfp1MxMofelA8c0l0_xeNRfwGjREgAhXXJUHjsa6kSk332cqdkG1-uJMh1UDVCQ/exec",
+  users: [
+    { email: "mosesforg@gmail.com",  nick: "Moses", color: "#1F4FD1" },
+    { email: "benchvue101@gmail.com", nick: "Isaac", color: "#D02B20" }
+  ],
+  dailyGoal: 10
+};
+const DEMO = /[?&]demo\b/.test(location.search);
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const QBY = Object.fromEntries(QS.map(q => [q.k, q]));
+const SCORE_M = [[200,200],[210,220],[210,220],[210,230],[220,240],[230,250],[240,270],[250,290],[260,320],[270,330],[290,350],[310,350],[330,370],[340,380],[350,390],[350,390],[360,400],[370,410],[370,410],[380,420],[390,430],[390,430],[400,440],[410,450],[410,450],[420,460],[430,470],[440,480],[450,490],[460,500],[470,510],[480,520],[490,530],[490,550],[500,560],[510,570],[530,590],[540,600],[550,610],[560,620],[570,630],[590,650],[600,660],[610,670],[620,680],[640,700],[650,710],[660,720],[680,740],[700,760],[710,770],[730,780],[750,800],[770,800],[790,800]];
+
+/* ================= Records ================= */
+let me = null;                                   // signed-in student {email,nick,color,cred,exp}
+const server = { attempts: [], loaded: false, error: null, updated: 0 };   // everyone's saved attempts {u,q,ok,t,s}
+let version = 0, cacheV = -1, cache = null;      // cache of attempts grouped by person and question
+const pendKey = () => "satMath.pending." + (me ? me.email : "guest");
+const GUEST_KEY = "satMath.guest";
+
+(function restore() {
+  const s = LS.get("satMath.session", null);
+  const u = s && SYNC.users.find(u => u.email === s.email);
+  if (u) me = { ...u, cred: s.cred, exp: s.exp };
+})();
+const tokenOk = () => !!(me && me.cred && me.exp - 60000 > Date.now());
+
+function allFor(nick) {          // attempts for one person: saved ones + those still waiting to sync from this device
+  const list = server.attempts.filter(a => a.u === nick);
+  const u = SYNC.users.find(x => x.nick === nick);
+  if (u) LS.get("satMath.pending." + u.email, []).forEach(a => list.push({ u: nick, q: a.q, ok: a.ok, t: a.t, s: a.s, pending: true }));
+  return list.sort((a, b) => a.t - b.t);
+}
+function mine() { return me ? allFor(me.nick) : LS.get(GUEST_KEY, []).map(a => ({ u: "guest", ...a })).sort((a, b) => a.t - b.t); }
+function byQ(list) { const m = new Map(); list.forEach(a => { if (!m.has(a.q)) m.set(a.q, []); m.get(a.q).push(a); }); return m; }
+function myByQ() { if (cacheV !== version) { cache = byQ(mine()); cacheV = version; } return cache; }
+const bump = () => { version++; };
+// status of one question for a list of tries: none | first (right on the 1st try) | fixed (right later) | wrong (never right yet)
+function qStatus(tries) {
+  if (!tries || !tries.length) return "none";
+  if (tries[0].ok) return "first";
+  return tries.some(t => t.ok) ? "fixed" : "wrong";
+}
+const lastWrong = tries => !!(tries && tries.length && !tries[tries.length - 1].ok);
+
+function record(q, ok, pick, secs) {
+  const a = { id: uid(), q: q.k, ok: !!ok, ans: String(pick).slice(0, 20), t: Date.now(), s: Math.max(0, Math.min(3600, Math.round(secs))) };
+  if (me) { const p = LS.get(pendKey(), []); p.push(a); LS.set(pendKey(), p); }
+  else { const g = LS.get(GUEST_KEY, []); g.push(a); LS.set(GUEST_KEY, g); }
+  bump(); renderAcct(); flush();
+}
+
+/* ================= Sync with the Apps Script backend ================= */
+let flushing = false, syncNote = "";
+async function flush() {
+  if (!me || DEMO) return;
+  const p = LS.get(pendKey(), []);
+  if (!p.length) { syncNote = "saved"; renderAcct(); return; }
+  if (!SYNC.apiUrl) { syncNote = "local"; renderAcct(); return; }
+  if (!tokenOk()) { syncNote = "relogin"; renderAcct(); if (window.google && google.accounts) google.accounts.id.prompt(); return; }
+  if (flushing) return; flushing = true; syncNote = "syncing"; renderAcct();
+  const batch = p.slice(0, 200);
+  try {
+    const r = await fetch(SYNC.apiUrl, { method: "POST", body: JSON.stringify({ idToken: me.cred, attempts: batch }) });
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || "save failed");
+    const done = new Set(batch.map(a => a.id));
+    LS.set(pendKey(), LS.get(pendKey(), []).filter(a => !done.has(a.id)));
+    batch.forEach(a => server.attempts.push({ u: me.nick, q: a.q, ok: a.ok, t: a.t, s: a.s }));
+    syncNote = "saved";
+  } catch (e) { syncNote = "offline"; }
+  flushing = false; bump(); renderAcct(); renderProgress();
+  if (syncNote === "saved" && LS.get(pendKey(), []).length) flush();
+}
+async function loadServer() {
+  if (DEMO) { server.attempts = demoData(); server.loaded = true; server.updated = Date.now(); bump(); return; }
+  if (!SYNC.apiUrl) { server.error = "setup"; return; }
+  try {
+    const r = await fetch(SYNC.apiUrl + (SYNC.apiUrl.includes("?") ? "&" : "?") + "action=progress&_=" + Date.now());
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || "load failed");
+    server.attempts = j.attempts.map(([ui, q, ok, ts, s]) => ({ u: j.users[ui], q, ok: !!ok, t: ts * 1000, s }));
+    server.loaded = true; server.error = null; server.updated = j.updated || Date.now();
+  } catch (e) { server.error = "offline"; }
+  bump();
+}
+
+/* ================= Google sign-in ================= */
+let gisReady = false;
+function jwt(t) { try { return JSON.parse(decodeURIComponent(escape(atob(t.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))))); } catch (e) { return {}; } }
+function onCred(r) {
+  const p = jwt(r.credential), email = String(p.email || "").toLowerCase();
+  const u = SYNC.users.find(x => x.email === email);
+  if (!u) { toast(`${email || "That account"} isn't on the student list for this site.`); return; }
+  me = { ...u, cred: r.credential, exp: (p.exp || 0) * 1000 };
+  LS.set("satMath.session", { email: u.email, cred: me.cred, exp: me.exp });
+  bump(); renderAcct(); renderHomeSafe(); flush();
+  toast(`Signed in as ${u.nick}. Every answer is now saved to your record.`);
+}
+function signOut() {
+  LS.del("satMath.session"); me = null;
+  if (window.google && google.accounts) google.accounts.id.disableAutoSelect();
+  bump(); renderAcct(); renderHomeSafe();
+}
+function loadGIS() {
+  if (DEMO || location.protocol === "file:") { renderAcct(); return; }
+  const s = document.createElement("script");
+  s.src = "https://accounts.google.com/gsi/client"; s.async = true; s.defer = true;
+  s.onload = () => {
+    google.accounts.id.initialize({ client_id: SYNC.clientId, callback: onCred, auto_select: true, cancel_on_tap_outside: true, use_fedcm_for_prompt: true });
+    gisReady = true; renderAcct();
+    if (me && !tokenOk() && LS.get(pendKey(), []).length) google.accounts.id.prompt();
+  };
+  s.onerror = () => renderAcct();
+  document.head.appendChild(s);
+}
+function todayCount() { const d0 = new Date(); d0.setHours(0, 0, 0, 0); return mine().filter(a => a.t >= d0.getTime()).length; }
+function renderAcct() {
+  const el = $("acct"); if (!el) return;
+  if (me) {
+    const p = LS.get(pendKey(), []).length, n = todayCount();
+    const note = DEMO ? "Demo" : !SYNC.apiUrl ? "Saved on this device" : p ? (syncNote === "relogin" ? `${p} waiting · sign in again to sync` : syncNote === "offline" ? `${p} waiting · offline` : `Syncing ${p}…`) : "All saved ✓";
+    el.innerHTML = `<span class="who"><i style="background:${me.color}"></i>${esc(me.nick)}</span>
+      <span class="goal" title="Questions answered today">Today ${n} / ${SYNC.dailyGoal}${n >= SYNC.dailyGoal ? " ★" : ""}</span>
+      <span class="sync">${note}</span><button class="linkbtn" id="signOut">Sign out</button>`;
+    $("signOut").onclick = signOut;
+    if (p && syncNote === "relogin" && gisReady) { const b = document.createElement("span"); b.id = "gsiBtn"; el.appendChild(b); google.accounts.id.renderButton(b, { type: "standard", size: "small", text: "signin", theme: "outline" }); }
+  } else {
+    el.innerHTML = `<span class="sync">Students: sign in to save your progress</span><span id="gsiBtn"></span>`;
+    if (gisReady) google.accounts.id.renderButton($("gsiBtn"), { type: "standard", size: "medium", text: "signin_with", theme: "outline", shape: "pill" });
+    else $("gsiBtn").innerHTML = `<span class="muted-s">${location.protocol === "file:" ? "Sign-in works on benchvue.github.io" : DEMO ? "Demo mode" : "Loading sign-in…"}</span>`;
+  }
+}
+let toastT = 0;
+function toast(msg) { let t = $("toast"); if (!t) { t = document.createElement("div"); t.id = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); } t.textContent = msg; t.className = "show"; clearTimeout(toastT); toastT = setTimeout(() => t.className = "", 4200); }
+
+/* ================= Home (topics) ================= */
+let list = [], idx = 0, listTitle = "";
+const answered = {};
+const COLORS = ["#1F4FD1", "#7A9BEE", "#17784A", "#D0A21A"];
+function renderHomeSafe() { if ($("home").style.display !== "none") renderHome(); }
+function renderHome() {
+  const m = $("domains"); m.innerHTML = "";
+  const total = QS.length, MQ = myByQ();
+  const counts = DOMAINS.map(d => QS.filter(q => d.cats.includes(q.c)).length);
+  const pct = n => (n / total * 100).toFixed(1) + "%";
+  const mistakes = QS.filter(q => lastWrong(MQ.get(q.k)));
+  const tried = QS.filter(q => MQ.has(q.k)).length;
+  if (tried) {
+    const rv = document.createElement("section"); rv.className = "review";
+    rv.innerHTML = `<div><b>${me ? esc(me.nick) + "’s" : "Your"} practice:</b> ${tried} of ${total} questions tried${me ? "" : " on this device"}.
+      ${mistakes.length ? `${mistakes.length} question${mistakes.length > 1 ? "s" : ""} where the last try was wrong.` : "No open mistakes. Nice!"}</div>`;
+    if (mistakes.length) { const b = document.createElement("button"); b.className = "btn"; b.textContent = `Review mistakes (${mistakes.length})`; b.onclick = () => openList(mistakes, "Review mistakes"); rv.appendChild(b); }
+    const untried = QS.filter(q => !MQ.has(q.k));
+    if (untried.length && tried >= 5) { const b = document.createElement("button"); b.className = "btn ghost"; b.textContent = "10 new questions"; b.onclick = () => openList(untried.sort(() => Math.random() - .5).slice(0, 10).sort((a, b) => a.t - b.t || a.m - b.m || a.n - b.n), "10 new questions"); rv.appendChild(b); }
+    m.appendChild(rv);
+  }
+  const sum = document.createElement("section"); sum.className = "summary";
+  sum.innerHTML = `<h2>Question breakdown</h2><div><span class="total">${total}</span> questions in total</div>
+    <div class="split">${counts.map((n, i) => `<i style="width:${n / total * 100}%;background:${COLORS[i]}" title="${DOMAINS[i].name}: ${pct(n)}"></i>`).join("")}</div>
+    <div class="legend">${DOMAINS.map((d, i) => `<div><span class="sw" style="background:${COLORS[i]}"></span>${d.name}<b>${counts[i]} · ${pct(counts[i])}</b></div>`).join("")}</div>`;
   m.appendChild(sum);
-  DOMAINS.forEach((d,di)=>{
-    const sec=document.createElement("section"); sec.className="domain";
-    sec.innerHTML=`<h2>${d.name} <span class="pct">${counts[di]} questions · ${pct(counts[di])}</span> <small>${d.note}</small></h2>`;
-    const g=document.createElement("div"); g.className="grid";
-    d.cats.forEach(c=>{
-      const qs=QS.filter(q=>q.c===c), done=qs.filter(q=>answered[q.k]?.ok).length;
-      const b=document.createElement("button"); b.className="cat";
-      b.innerHTML=`<b>${CATS[c]}</b><span><span class="n">${qs.length}</span> questions${done?` · ${done} correct`:""}</span>`;
-      b.onclick=()=>openCat(c); g.appendChild(b);
+  DOMAINS.forEach((d, di) => {
+    const sec = document.createElement("section"); sec.className = "domain";
+    sec.innerHTML = `<h2>${d.name} <span class="pct">${counts[di]} questions · ${pct(counts[di])}</span> <small>${d.note}</small></h2>`;
+    const g = document.createElement("div"); g.className = "grid";
+    d.cats.forEach(c => {
+      const qs = QS.filter(q => q.c === c);
+      const st = qs.map(q => qStatus(MQ.get(q.k)));
+      const tr = st.filter(s => s !== "none").length, ok = st.filter(s => s === "first" || s === "fixed").length;
+      const b = document.createElement("button"); b.className = "cat";
+      b.innerHTML = `<b>${CATS[c]}</b><span><span class="n">${qs.length}</span> questions${tr ? ` · ${tr} tried · ${ok} ✓` : ""}</span>
+        ${tr ? `<span class="mini" aria-hidden="true"><i class="ok" style="width:${ok / qs.length * 100}%"></i><i class="tr" style="width:${(tr - ok) / qs.length * 100}%"></i></span>` : ""}`;
+      b.onclick = () => openCat(c); g.appendChild(b);
     });
     sec.appendChild(g); m.appendChild(sec);
   });
+  renderProgress();
 }
-function openCat(c){
-  list=QS.filter(q=>q.c===c); idx=0;
-  $("home").style.display="none"; $("quiz").style.display="block";
-  $("qTitle").textContent=CATS[c]; render(); window.scrollTo(0,0);
+function openList(qs, title) {
+  list = qs; idx = 0; listTitle = title;
+  $("home").style.display = "none"; $("quiz").style.display = "block";
+  $("qTitle").textContent = title; render(); window.scrollTo(0, 0);
 }
-function goHome(){ $("quiz").style.display="none"; $("home").style.display="block"; renderHome(); window.scrollTo(0,0); }
-function parseNum(s){
-  s=s.trim().replace(/,/g,"").replace(/−/g,"-"); if(!s) return NaN;
-  if(s.includes("/")){const [a,b]=s.split("/"); return parseFloat(a)/parseFloat(b);}
+function openCat(c) { openList(QS.filter(q => q.c === c), CATS[c]); }
+function goHome() { $("quiz").style.display = "none"; $("home").style.display = "block"; renderHome(); window.scrollTo(0, 0); }
+
+/* ================= One question per page ================= */
+function parseNum(s) {
+  s = s.trim().replace(/,/g, "").replace(/−/g, "-"); if (!s) return NaN;
+  if (s.includes("/")) { const [a, b] = s.split("/"); return parseFloat(a) / parseFloat(b); }
   return parseFloat(s);
 }
-const isMC=q=>typeof q.a==="string";
-function fmtAns(q){ return isMC(q)? q.a : q.a.map(v=>Number.isInteger(v)?v:+v.toFixed(4)).join(" or "); }
-function render(){
-  const q=list[idx], st=answered[q.k];
-  $("count").textContent=`Question ${idx+1} of ${list.length}`;
-  $("src").textContent=q.s;
-  $("prog").style.width=((idx+1)/list.length*100)+"%";
-  $("prevBtn").disabled=idx===0;
-  $("nextBtn").textContent=idx===list.length-1?"Finish":"Next";
-  const [w,h]=DIM[q.k];
-  let html=`<img class="qimg" src="data:image/png;base64,${IMG[q.k]}" width="${w}" height="${h}" alt="${q.s}">`;
-  if(isMC(q)){
-    html+=`<div class="letters">`+["A","B","C","D"].map(L=>{
-      let cls="opt"; if(st){ if(L===q.a) cls+=" right"; else if(L===st.pick) cls+=" wrong"; }
-      return `<button class="${cls}" data-l="${L}" ${st?"disabled":""}>${L}</button>`;}).join("")+`</div>`;
+const isMC = q => typeof q.a === "string";
+function fmtAns(q) { return isMC(q) ? q.a : q.a.map(v => Number.isInteger(v) ? v : +v.toFixed(4)).join(" or "); }
+const fmtWhen = t => new Date(t).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+function triesHTML(tries) {
+  if (!tries || !tries.length) return `<span class="tries-none">Not tried yet</span>`;
+  const shown = tries.slice(0, 4).map((a, i) => `<span class="dot ${a.ok ? "ok" : "no"}" title="Try ${i + 1}: ${a.ok ? "correct" : "wrong"} · ${fmtWhen(a.t)}" aria-label="Try ${i + 1}: ${a.ok ? "correct" : "wrong"}">${a.ok ? "✓" : "✕"}</span>`).join("");
+  const more = tries.length > 4 ? `<span class="more">+${tries.length - 4}</span>` : "";
+  const k = tries.findIndex(a => a.ok);
+  const sum = k === 0 ? "Right on the first try" : k > 0 ? `Right on try ${k + 1}` : `Not right yet · ${tries.length} ${tries.length > 1 ? "tries" : "try"}`;
+  return `${shown}${more}<span class="tries-sum">${sum}</span>`;
+}
+let shownKey = "", shownAt = Date.now();
+function render() {
+  const q = list[idx], st = answered[q.k], MQ = myByQ();
+  if (shownKey !== q.k) { shownKey = q.k; shownAt = Date.now(); }
+  $("count").textContent = `Question ${idx + 1} of ${list.length}`;
+  $("src").textContent = q.s;
+  $("prog").style.width = ((idx + 1) / list.length * 100) + "%";
+  $("prevBtn").disabled = idx === 0;
+  $("nextBtn").textContent = idx === list.length - 1 ? "Finish" : "Next";
+  $("qnav").innerHTML = list.map((x, i) => `<button class="qd ${qStatus(MQ.get(x.k))}${i === idx ? " cur" : ""}" data-i="${i}" title="Question ${i + 1}: ${x.s}" aria-label="Go to question ${i + 1}"></button>`).join("");
+  $("qnav").querySelectorAll(".qd").forEach(b => b.onclick = () => { idx = +b.dataset.i; render(); });
+  const [w, h] = DIM[q.k];
+  let html = `<div class="qhead"><span class="tries" aria-label="Your tries on this question">${triesHTML(MQ.get(q.k))}</span></div>`;
+  html += `<img class="qimg" src="data:image/png;base64,${IMG[q.k]}" width="${w}" height="${h}" alt="${q.s}">`;
+  if (isMC(q)) {
+    html += `<div class="letters">` + ["A", "B", "C", "D"].map(L => {
+      let cls = "opt"; if (st) { if (L === q.a) cls += " right"; else if (L === st.pick) cls += " wrong"; }
+      return `<button class="${cls}" data-l="${L}" ${st ? "disabled" : ""}>${L}</button>`; }).join("") + `</div>`;
   } else {
-    html+=`<div class="spr"><input id="spr" inputmode="decimal" placeholder="Your answer" aria-label="Your answer" value="${st?st.pick:""}" ${st?"disabled":""}><button class="btn" id="checkBtn" ${st?"disabled":""}>Check</button></div>`;
+    html += `<div class="spr"><input id="spr" inputmode="decimal" placeholder="Your answer" aria-label="Your answer" value="${st ? esc(st.pick) : ""}" ${st ? "disabled" : ""}><button class="btn" id="checkBtn" ${st ? "disabled" : ""}>Check</button></div>`;
   }
-  html+=`<div class="feedback" id="fb"></div>`;
-  if(!st) html+=`<button class="reveal" id="revealBtn">Show answer</button>`;
-  $("card").innerHTML=html;
-  if(isMC(q)) document.querySelectorAll(".letters .opt").forEach(b=>b.onclick=()=>{answered[q.k]={pick:b.dataset.l,ok:b.dataset.l===q.a};render();});
-  else if(!st){
-    const check=()=>{const v=parseNum($("spr").value); if(isNaN(v)){$("spr").focus();return;}
-      const ok=q.a.some(a=>Math.abs(a-v)<=Math.max(0.006,Math.abs(a)*0.0005));
-      answered[q.k]={pick:$("spr").value,ok}; render();};
-    $("checkBtn").onclick=check; $("spr").onkeydown=e=>{if(e.key==="Enter")check();};
+  html += `<div class="feedback" id="fb"></div>`;
+  if (!st) html += `<button class="reveal" id="revealBtn">Show answer</button>`;
+  else html += `<button class="btn ghost again" id="againBtn">Try again</button>`;
+  $("card").innerHTML = html;
+  const answer = (pick, ok) => { answered[q.k] = { pick, ok }; record(q, ok, pick, (Date.now() - shownAt) / 1000); render(); };
+  if (isMC(q)) document.querySelectorAll(".letters .opt").forEach(b => b.onclick = () => answer(b.dataset.l, b.dataset.l === q.a));
+  else if (!st) {
+    const check = () => { const v = parseNum($("spr").value); if (isNaN(v)) { $("spr").focus(); return; }
+      answer($("spr").value, q.a.some(a => Math.abs(a - v) <= Math.max(0.006, Math.abs(a) * 0.0005))); };
+    $("checkBtn").onclick = check; $("spr").onkeydown = e => { if (e.key === "Enter") check(); };
   }
-  if($("revealBtn")) $("revealBtn").onclick=()=>showFb("info");
-  if(st) showFb(st.ok?"ok":"bad");
+  if ($("revealBtn")) $("revealBtn").onclick = () => showFb("info");
+  if ($("againBtn")) $("againBtn").onclick = () => { delete answered[q.k]; shownAt = Date.now(); render(); };
+  if (st) showFb(st.ok ? "ok" : "bad");
 }
-function showFb(type){
-  const q=list[idx], fb=$("fb");
-  const head=type==="ok"?"Correct.":type==="bad"?"Not quite.":"Answer";
-  fb.className="feedback show "+type;
-  fb.innerHTML=`<strong>${head}</strong> Answer: ${fmtAns(q)}<p>${q.e}</p>`;
-  if(type==="info"&&$("revealBtn")) $("revealBtn").remove();
+function showFb(type) {
+  const q = list[idx], fb = $("fb");
+  const head = type === "ok" ? "Correct." : type === "bad" ? "Not quite." : "Answer";
+  fb.className = "feedback show " + type;
+  fb.innerHTML = `<strong>${head}</strong> Answer: ${fmtAns(q)}<p>${q.e}</p>`;
+  if (type === "info" && $("revealBtn")) $("revealBtn").remove();
 }
-$("prevBtn").onclick=()=>{if(idx>0){idx--;render();window.scrollTo(0,0);}};
-$("nextBtn").onclick=()=>{if(idx<list.length-1){idx++;render();window.scrollTo(0,0);}else goHome();};
-$("backBtn").onclick=goHome;
-document.addEventListener("keydown",e=>{
-  if($("quiz").style.display!=="block"||e.target.tagName==="INPUT")return;
-  if(e.key==="ArrowRight")$("nextBtn").click();
-  if(e.key==="ArrowLeft"&&idx>0)$("prevBtn").click();
+$("prevBtn").onclick = () => { if (idx > 0) { idx--; render(); window.scrollTo(0, 0); } };
+$("nextBtn").onclick = () => { if (idx < list.length - 1) { idx++; render(); window.scrollTo(0, 0); } else goHome(); };
+$("backBtn").onclick = goHome;
+document.addEventListener("keydown", e => {
+  if ($("quiz").style.display !== "block" || e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowRight") $("nextBtn").click();
+  if (e.key === "ArrowLeft" && idx > 0) $("prevBtn").click();
 });
-renderHome();
+
+/* ================= Progress for parents (public, no sign-in needed) ================= */
+let pgRange = LS.get("satMath.pgRange", "7d");
+const DAY = 864e5;
+const startOfDay = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const DOM_OF = Object.fromEntries(QS.map(q => [q.k, DOMAINS.findIndex(d => d.cats.includes(q.c))]));
+const DOM_TOTAL = DOMAINS.map(d => QS.filter(q => d.cats.includes(q.c)).length);
+
+function buckets(range) {
+  const now = new Date(), out = [];
+  if (range === "7d") {
+    const t0 = startOfDay(now);
+    for (let i = 6; i >= 0; i--) { const a = t0 - i * DAY; out.push({ a, b: a + DAY, label: new Date(a).toLocaleDateString("en-US", { weekday: "short" }), long: new Date(a).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }) }); }
+  } else if (range === "4w") {
+    const end = startOfDay(now) + DAY;
+    for (let i = 3; i >= 0; i--) { const b = end - i * 7 * DAY, a = b - 7 * DAY; const f = d => new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }); out.push({ a, b, label: i === 0 ? "This week" : f(a), long: `${f(a)} – ${f(b - DAY)}` }); }
+  } else {
+    for (let i = 11; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1), e = new Date(now.getFullYear(), now.getMonth() - i + 1, 1); out.push({ a: d.getTime(), b: e.getTime(), label: d.toLocaleDateString("en-US", { month: "short" }), long: d.toLocaleDateString("en-US", { month: "long", year: "numeric" }) }); }
+  }
+  return out;
+}
+function statsFor(u) {
+  const all = allFor(u.nick), MQ = byQ(all);
+  const firsts = [...MQ.values()].map(t => t[0]);
+  const dom = DOMAINS.map(() => ({ tried: 0, ok: 0, first: 0 }));
+  const topic = {}; Object.keys(CATS).forEach(c => topic[c] = { tried: 0, ok: 0, first: 0 });
+  MQ.forEach((tries, k) => {
+    const q = QBY[k]; if (!q) return;
+    const s = qStatus(tries), d = dom[DOM_OF[k]], tp = topic[q.c];
+    d.tried++; tp.tried++;
+    if (s === "first" || s === "fixed") { d.ok++; tp.ok++; }
+    if (s === "first") { d.first++; tp.first++; }
+  });
+  const days = new Set(all.map(a => startOfDay(a.t)));
+  let streak = 0, d0 = startOfDay(Date.now()); if (!days.has(d0)) d0 -= DAY;
+  while (days.has(d0)) { streak++; d0 -= DAY; }
+  const wk = startOfDay(Date.now()) + DAY - 7 * DAY;
+  const thisWeek = all.filter(a => a.t >= wk).length, lastWeek = all.filter(a => a.t >= wk - 7 * DAY && a.t < wk).length;
+  const timed = all.filter(a => a.s > 0 && a.s < 1800);
+  const avgSec = timed.length ? timed.reduce((s, a) => s + a.s, 0) / timed.length : 0;
+  const mistakes = [...MQ.values()].filter(lastWrong).length;
+  // estimated score: first-try accuracy per domain, weighted like the SAT blueprint (35/35/15/15 %)
+  let est = null;
+  if (firsts.length >= 20) {
+    const overall = firsts.filter(a => a.ok).length / firsts.length, W = [.35, .35, .15, .15];
+    const raw = Math.round(54 * dom.reduce((s, d, i) => s + W[i] * (d.tried >= 5 ? d.first / d.tried : overall), 0));
+    est = SCORE_M[Math.max(0, Math.min(54, raw))];
+  }
+  const weak = Object.entries(topic).filter(([c, t]) => t.tried >= 3).map(([c, t]) => ({ c: +c, acc: t.first / t.tried, ...t })).sort((a, b) => a.acc - b.acc).slice(0, 2);
+  return { u, all, MQ, dom, topic, streak, thisWeek, lastWeek, avgSec, mistakes, est, weak,
+    firstAcc: firsts.length ? Math.round(firsts.filter(a => a.ok).length / firsts.length * 100) : null,
+    last: all.length ? all[all.length - 1].t : 0 };
+}
+function ago(t) {
+  if (!t) return "Not started yet";
+  const d = Math.floor((startOfDay(Date.now()) - startOfDay(t)) / DAY);
+  const tm = new Date(t).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  return d === 0 ? `Today, ${tm}` : d === 1 ? `Yesterday, ${tm}` : d < 7 ? `${d} days ago` : new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+const mmss = s => s ? (s >= 60 ? `${Math.floor(s / 60)}m ${Math.round(s % 60)}s` : `${Math.round(s)}s`) : "—";
+
+function renderProgress() {
+  const box = $("pgBody"); if (!box) return;
+  const S = SYNC.users.map(statsFor);
+  // status line
+  $("pgStatus").innerHTML = DEMO ? `<b>Demo data.</b> These numbers are made up to show how the page will look. Remove <code>?demo</code> from the address to see real progress.`
+    : server.error === "setup" ? `<b>Not connected yet.</b> Progress appears here once the Google Sheet backend is set up (see README). Until then, answers are kept on each student's own device.`
+    : server.error === "offline" ? `Couldn't reach the progress sheet right now. Showing what this device has.` : "";
+  $("pgStatus").hidden = !$("pgStatus").innerHTML;
+  $("pgUpdated").textContent = server.updated ? `Updated ${new Date(server.updated).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}` : "";
+
+  // 1) one line per student, as requested
+  $("pgLines").innerHTML = S.map(s => `<p><i class="sw" style="background:${s.u.color}"></i><b>${esc(s.u.nick)}</b> – ${DOMAINS.map((d, i) => `${d.name} (${s.dom[i].tried}/${DOM_TOTAL[i]})`).join(", ")}</p>`).join("");
+
+  // 2) parent cards
+  $("pgCards").innerHTML = S.map(s => {
+    const trend = s.thisWeek - s.lastWeek;
+    return `<article class="pc" style="--c:${s.u.color}">
+      <h3><i class="sw"></i>${esc(s.u.nick)}</h3>
+      <dl>
+        <div><dt>Last practice</dt><dd>${ago(s.last)}</dd></div>
+        <div><dt>This week</dt><dd>${s.thisWeek} answers <small>${s.lastWeek || s.thisWeek ? (trend >= 0 ? "▲ " : "▼ ") + Math.abs(trend) + " vs last week" : ""}</small></dd></div>
+        <div><dt>Streak</dt><dd>${s.streak} day${s.streak === 1 ? "" : "s"}</dd></div>
+        <div><dt>Right on first try</dt><dd>${s.firstAcc === null ? "—" : s.firstAcc + "%"}</dd></div>
+        <div><dt>Time per question</dt><dd>${mmss(s.avgSec)}</dd></div>
+        <div><dt>Open mistakes</dt><dd>${s.mistakes}</dd></div>
+        <div class="wide"><dt>Estimated Math score</dt><dd>${s.est ? `${s.est[0]}–${s.est[1]} <small>rough guess from first tries</small>` : `<small>needs 20+ questions</small>`}</dd></div>
+        <div class="wide"><dt>Focus next</dt><dd>${s.weak.length ? s.weak.map(w => `<a href="#topic-${w.c}" data-topic="${w.c}">${CATS[w.c]}</a> <small>${Math.round(w.acc * 100)}% first try</small>`).join("<br>") : "<small>needs 3+ questions in a topic</small>"}</dd></div>
+      </dl></article>`;
+  }).join("");
+  $("pgCards").querySelectorAll("a[data-topic]").forEach(a => a.onclick = e => { e.preventDefault(); openCat(+a.dataset.topic); });
+
+  // 3) activity bar chart
+  document.querySelectorAll("#pgRange button").forEach(b => b.setAttribute("aria-pressed", b.dataset.r === pgRange));
+  drawActivity(S);
+
+  // 4) domain + topic progress bars
+  const openNow = new Set([...document.querySelectorAll("#pgDomains details[open]")].map(d => d.dataset.i));
+  $("pgDomains").innerHTML = DOMAINS.map((d, i) => `<div class="pd">
+      <div class="pd-h"><span class="pd-name">${d.name}</span><span class="pd-total">${DOM_TOTAL[i]} questions</span></div>
+      <div class="pd-rows">${S.map(s => barRow(s.u, s.dom[i], DOM_TOTAL[i])).join("")}</div>
+      <details data-i="${i}"${openNow.has(String(i)) ? " open" : ""}><summary>Show the ${d.cats.length} topics</summary>
+      <div class="pd-topics">${d.cats.map(c => { const n = QS.filter(q => q.c === c).length;
+        return `<div class="pt"><a href="#topic-${c}" data-topic="${c}">${CATS[c]}</a>${S.map(s => barRow(s.u, s.topic[c], n, true)).join("")}</div>`; }).join("")}</div>
+    </details></div>`).join("");
+  $("pgDomains").querySelectorAll("a[data-topic]").forEach(a => a.onclick = e => { e.preventDefault(); openCat(+a.dataset.topic); });
+}
+function barRow(u, t, total, small) {
+  const ok = t.ok / total * 100, tr = (t.tried - t.ok) / total * 100;
+  return `<div class="br${small ? " sm" : ""}" style="--c:${u.color}">
+    <span class="br-who">${esc(u.nick)}</span>
+    <span class="br-track" role="img" aria-label="${esc(u.nick)}: ${t.tried} of ${total} tried, ${t.ok} answered correctly">
+      <i class="ok" style="width:${ok}%"></i><i class="tr" style="width:${tr}%"></i></span>
+    <span class="br-num">${t.tried}/${total} <small>${t.ok} ✓</small></span></div>`;
+}
+function drawActivity(S) {
+  const B = buckets(pgRange);
+  const data = B.map(b => S.map(s => { const x = s.all.filter(a => a.t >= b.a && a.t < b.b); return { n: x.length, ok: x.filter(a => a.ok).length }; }));
+  const W = Math.max(320, Math.round($("pgChart").clientWidth) || 900), H = W < 600 ? 220 : 260, L = 34, R = 6, T = 14, Bm = 30;
+  const max = Math.max(4, ...data.flat().map(v => v.n));
+  const step = max <= 10 ? 2 : max <= 25 ? 5 : max <= 60 ? 10 : max <= 150 ? 25 : 50, top = Math.ceil(max / step) * step;
+  const X = i => L + (W - L - R) * (i + .5) / B.length, Y = v => T + (H - T - Bm) * (1 - v / top);
+  const gw = (W - L - R) / B.length, bw = Math.min(34, gw * .32);
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="act" role="img" aria-label="Questions answered per ${pgRange === "7d" ? "day" : pgRange === "4w" ? "week" : "month"}">`;
+  for (let v = 0; v <= top; v += step) s += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="${v ? "#E3EAF4" : "#18233A"}" stroke-width="${v ? 1 : 1.5}"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end" class="ax">${v}</text>`;
+  B.forEach((b, i) => {
+    s += `<text x="${X(i)}" y="${H - 9}" text-anchor="middle" class="ax">${b.label}</text>`;
+    S.forEach((st, j) => {
+      const v = data[i][j].n, x = X(i) + (j - S.length / 2) * (bw + 2) + 1, y = Y(v), h = Y(0) - y;
+      if (v) { const r = Math.min(4, h, bw / 2); s += `<path d="M${x},${Y(0)} V${y + r} q0,-${r} ${r},-${r} h${bw - 2 * r} q${r},0 ${r},${r} V${Y(0)} Z" fill="${st.u.color}"/>`; }
+    });
+    s += `<rect class="hit" x="${X(i) - gw / 2}" y="${T}" width="${gw}" height="${H - T - Bm}" fill="transparent" data-i="${i}" tabindex="0"/>`;
+  });
+  s += `</svg>`;
+  $("pgChart").innerHTML = s;
+  const tip = $("pgTip");
+  const show = (el, i) => {
+    tip.innerHTML = `<b>${B[i].long}</b>` + S.map((st, j) => `<div><i style="background:${st.u.color}"></i><strong>${data[i][j].n}</strong> ${esc(st.u.nick)} <small>${data[i][j].ok} right · ${data[i][j].n - data[i][j].ok} wrong</small></div>`).join("");
+    tip.hidden = false;
+    const r = el.getBoundingClientRect(), p = $("pgChart").getBoundingClientRect();
+    tip.style.left = Math.min(p.width - 220, Math.max(0, r.left - p.left + r.width / 2 - 110)) + "px"; tip.style.top = "0px";
+    $("pgChart").querySelectorAll(".hit").forEach(h => h.classList.toggle("on", h === el));
+  };
+  $("pgChart").querySelectorAll(".hit").forEach(h => { const i = +h.dataset.i; h.onpointerenter = () => show(h, i); h.onfocus = () => show(h, i); });
+  $("pgChart").onpointerleave = () => { tip.hidden = true; $("pgChart").querySelectorAll(".hit").forEach(h => h.classList.remove("on")); };
+  $("pgTable").innerHTML = `<table class="sct"><thead><tr><th>Period</th>${S.map(s => `<th>${esc(s.u.nick)}</th>`).join("")}</tr></thead><tbody>${B.map((b, i) => `<tr><td>${b.long}</td>${S.map((st, j) => `<td>${data[i][j].n} <small>(${data[i][j].ok} ✓)</small></td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+document.querySelectorAll("#pgRange button").forEach(b => b.onclick = () => { pgRange = b.dataset.r; LS.set("satMath.pgRange", pgRange); renderProgress(); });
+$("pgRefresh").onclick = async () => { $("pgRefresh").disabled = true; await loadServer(); renderHomeSafe(); renderProgress(); $("pgRefresh").disabled = false; };
+
+/* demo data so the page can be previewed before the backend is set up (?demo) */
+function demoData() {
+  const out = []; let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const now = Date.now();
+  [["Moses", .62, 1.0], ["Isaac", .78, .45]].forEach(([u, acc, busy]) => {
+    const order = QS.map(q => q.k).sort(() => rnd() - .5); let k = 0;
+    for (let d = 364; d >= 0; d--) {
+      if (rnd() > busy * (d < 30 ? .85 : d < 120 ? .45 : .12)) continue;
+      const n = 1 + Math.floor(rnd() * 4);
+      for (let i = 0; i < n && k < order.length; i++) {
+        const t = startOfDay(now - d * DAY) + (16 + rnd() * 5) * 36e5;
+        if (t > now) continue;
+        const q = order[k++], ok = rnd() < acc;
+        out.push({ u, q, ok, t, s: 30 + Math.round(rnd() * 150) });
+        if (!ok && rnd() < .7) out.push({ u, q, ok: rnd() < .75, t: t + 120000, s: 40 + Math.round(rnd() * 90) });
+      }
+    }
+  });
+  return out;
+}
+
+/* ================= Start ================= */
+renderHome(); renderAcct(); loadGIS();
+loadServer().then(() => { renderHomeSafe(); renderProgress(); flush(); });
+window.addEventListener("online", flush);
+let rsT = 0; window.addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(() => { if ($("home").style.display !== "none") renderProgress(); }, 200); });
 
 /* ================= Math score conversion ================= */
 (function(){
